@@ -1,3 +1,32 @@
-﻿@{
+﻿@model IEnumerable<uTest.WEB.ViewModels.TestViewModel>
+
+@{
     ViewBag.Title = "Main";
+}
+
+@foreach (var test in Model)
+{
+    <h4>@test.Name</h4>
+    <h6>@test.Description</h6>
+    <br/>
+
+    foreach (var question in test.Questions)
+    {
+        <p>@question.Text</p>
+        foreach (var answer in question.Answers)
+        {
+            if (answer.IsCorrect)
+            {
+                <p>+ @answer.Text</p>
+            }
+            else
+            {
+                <p>- @answer.Text</p>
+            }
+        }
+        <br/>
+    }
+    <br/>
+    <hr/>
+    <br/>
 }

@@ -10,8 +10,6 @@ namespace uTest.BLL.DTO
 
         public bool IsMultipleAnswers { get; set; }
 
-        public virtual TestDTO Test { get; set; }
-
         public virtual ICollection<AnswerDTO> Answers { get; set; }
     }
 }
