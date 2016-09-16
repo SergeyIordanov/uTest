@@ -42,6 +42,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BLL\DTO\" />
+    <Folder Include="BLL\Infrastructure\" />
+    <Folder Include="BLL\Interfaces\" />
+    <Folder Include="BLL\Services\" />
+    <Folder Include="DAL\EF\" />
+    <Folder Include="DAL\Identity\" />
+    <Folder Include="DAL\Interfaces\" />
+    <Folder Include="DAL\Repositories\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
