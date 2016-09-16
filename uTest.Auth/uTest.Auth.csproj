@@ -30,7 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,17 +57,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\DTO\SolvedTestDTO.cs" />
+    <Compile Include="BLL\DTO\UserDTO.cs" />
+    <Compile Include="BLL\Infrastructure\OperationDetails.cs" />
+    <Compile Include="BLL\Interfaces\IServiceCreator.cs" />
+    <Compile Include="BLL\Interfaces\IUserService.cs" />
+    <Compile Include="BLL\Services\ServiceCreator.cs" />
+    <Compile Include="BLL\Services\UserService.cs" />
+    <Compile Include="BLL\Services\Validator.cs" />
+    <Compile Include="DAL\EF\AuthContext.cs" />
+    <Compile Include="DAL\EF\AuthDbInitializer.cs" />
+    <Compile Include="DAL\Identity\ApplicationRoleManager.cs" />
+    <Compile Include="DAL\Identity\ApplicationUserManager.cs" />
+    <Compile Include="DAL\Interfaces\IClientManager.cs" />
+    <Compile Include="DAL\Interfaces\IUnitOfWork.cs" />
+    <Compile Include="DAL\Repositories\ClientManager.cs" />
+    <Compile Include="DAL\Repositories\IdentityUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BLL\DTO\" />
-    <Folder Include="BLL\Infrastructure\" />
-    <Folder Include="BLL\Interfaces\" />
-    <Folder Include="BLL\Services\" />
-    <Folder Include="DAL\EF\" />
-    <Folder Include="DAL\Identity\" />
-    <Folder Include="DAL\Interfaces\" />
-    <Folder Include="DAL\Repositories\" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\uTest.Entities\uTest.Entities.csproj">
+      <Project>{980DDEB3-E117-4AE2-97CA-5E231060A3B2}</Project>
+      <Name>uTest.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
