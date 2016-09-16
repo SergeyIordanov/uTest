@@ -20,7 +20,7 @@ namespace uTest.DAL.Interfaces
         /// </summary>
         /// <param name="id">Id of the item to get</param>
         /// <returns>The item of current type (T)</returns>
-        T Get(int id);
+        T Get(long id);
 
         /// <summary>
         /// Gets the items of current type from db using anon function for search
@@ -48,6 +48,6 @@ namespace uTest.DAL.Interfaces
         /// May throw ValidationException if smth goes wrong
         /// </summary>
         /// <param name="id">Id of item to delete</param>
-        void Delete(int id);
+        void Delete(long id);
     }
 }

@@ -22,7 +22,7 @@ namespace uTest.DAL.Repositories
             return _db.Tests.ToList();
         }
 
-        public Test Get(int id)
+        public Test Get(long id)
         {
             return _db.Tests.Find(id);
         }
@@ -47,7 +47,7 @@ namespace uTest.DAL.Repositories
             return _db.Tests.Where(predicate).ToList();
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             Test car = _db.Tests.Find(id);
             if (car != null)
