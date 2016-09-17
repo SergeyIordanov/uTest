@@ -14,7 +14,17 @@ namespace uTest.DAL.Interfaces
         /// Gives access to tests repository
         /// </summary>
         IRepository<Test> Tests { get; }
-       
+
+        /// <summary>
+        /// Gives access to questions repository
+        /// </summary>
+        IRepository<Question> Questions { get; }
+
+        /// <summary>
+        /// Gives access to answers repository
+        /// </summary>
+        IRepository<Answer> Answer { get; }
+
         /// <summary>
         /// Saves all changes to the database
         /// </summary>

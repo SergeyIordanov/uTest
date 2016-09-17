@@ -49,9 +49,9 @@ namespace uTest.DAL.Repositories
 
         public void Delete(long id)
         {
-            Test car = _db.Tests.Find(id);
-            if (car != null)
-                _db.Tests.Remove(car);
+            Test test = _db.Tests.Find(id);
+            if (test != null)
+                _db.Tests.Remove(test);
         }
     }
 }

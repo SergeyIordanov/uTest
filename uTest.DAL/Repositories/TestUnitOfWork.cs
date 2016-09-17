@@ -9,6 +9,9 @@ namespace uTest.DAL.Repositories
     {
         private readonly TestContext _db;
         private TestRepository _testRepository;
+        private QuestionRepository _questionRepository;
+        private AnswerRepository _answerRepository;
+
 
         public TestUnitOfWork(string connectionString)
         {
@@ -16,6 +19,9 @@ namespace uTest.DAL.Repositories
         }
         public IRepository<Test> Tests => _testRepository ?? (_testRepository = new TestRepository(_db));
 
+        public IRepository<Question> Questions => _questionRepository ?? (_questionRepository = new QuestionRepository(_db));
+
+        public IRepository<Answer> Answers => _answerRepository ?? (_answerRepository = new AnswerRepository(_db));
 
         public void Save()
         {
