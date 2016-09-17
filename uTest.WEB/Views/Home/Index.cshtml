@@ -1,4 +1,4 @@
-﻿@model IEnumerable<uTest.WEB.ViewModels.TestViewModel>
+﻿@model uTest.WEB.ViewModels.StatisticViewModel
 
 @{
     ViewBag.Title = "Home";
@@ -26,53 +26,67 @@
                 <div class="row">
                     <p class="flow-text welcome-text centralized">Welcome</p>
                     <p class="flow-text sub-welcome-text centralized">Are you ready for some testing?</p>
-                    <hr class="colored-hr-thin" />
+                    <hr class="colored-hr-thin"/>
                 </div>
-                <div class="row">
-                    <div class="col l10 m10 s12 push-l1 push-m1">
-                        <p class="flow-text sub-welcome-text centralized">To use uTest service you have to sign up</p>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (Model != null)
+                     {
+                         <div class="row">
+                             <div class="col l3 m3 s8 push-s2 centralized">
+                                 <img class="responsive-img circle" src="~/Content/images/avatar.jpg"/>
+                             </div>
+                             <div class="col l9 m9 s12">
+                                 <div class="row">
+                                     <p class="flow-text avarage-text centralized">Personal statistic</p>
+                                 </div>
+                                 <div class="row">
+                                     <p class="flow-text sub-welcome-text">Solved tests: @Model.SolvedTests</p>
+                                     <p class="flow-text sub-welcome-text">Completed tasks: @Model.CompletedTasks</p>
+                                     <p class="flow-text sub-welcome-text">Failed tasks: @Model.FailedTasks</p>
+                                     <p class="flow-text sub-welcome-text">Avarage mark: @Model.AvarageMark</p>
+                                 </div>
+                             </div>
+                         </div>
+                    }
+                    else
+                    {
                         <div class="row">
-                            <div class="col l4 m4 s8 push-l2 push-m2 push-s2">
-                                <div class="collection no-margin-top">
-                                    @Html.RouteLink("LogIn", new { controller = "Account", action = "Login" }, new { @class = "collection-item main-color-text" })
+                            <div class="col l3 m3 s8 push-s2 centralized">
+                                <img class="responsive-img circle" src="~/Content/images/avatar.jpg" />
+                            </div>
+                            <div class="col l9 m9 s12">
+                                <div class="row">
+                                    <p class="flow-text avarage-text centralized">Personal statistic</p>
+                                </div>
+                                <div class="row">
+                                    <p class="flow-text sub-welcome-text centralized">Cannot load your statistic=( </p>
                                 </div>
                             </div>
-                            <div class="col l4 m4 s8 push-l2 push-m2 push-s2">
-                                <div class="collection no-margin-top">
-                                    @Html.RouteLink("Register", new { controller = "Account", action = "Register" }, new { @class = "collection-item main-color-text" })
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col l10 m10 s12 push-l1 push-m1">
+                            <p class="flow-text sub-welcome-text centralized">To use uTest service you have to sign up</p>
+                            <div class="row">
+                                <div class="col l4 m4 s8 push-l2 push-m2 push-s2">
+                                    <div class="collection no-margin-top">
+                                        @Html.RouteLink("LogIn", new {controller = "Account", action = "Login"}, new {@class = "collection-item main-color-text"})
+                                    </div>
+                                </div>
+                                <div class="col l4 m4 s8 push-l2 push-m2 push-s2">
+                                    <div class="collection no-margin-top">
+                                        @Html.RouteLink("Register", new {controller = "Account", action = "Register"}, new {@class = "collection-item main-color-text"})
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
-        </div>      
+        </div>
     </div>
 </div>
-
-@*@foreach (var test in Model)
-            {
-    <h4>@test.Name</h4>
-                <h6>@test.Description</h6>
-                <br />
-
-    foreach (var question in test.Questions)
-    {
-        <p>@question.Text</p>
-        foreach (var answer in question.Answers)
-        {
-            if (answer.IsCorrect)
-            {
-                <p>+ @answer.Text</p>
-            }
-            else
-            {
-                <p>- @answer.Text</p>
-            }
-        }
-        <br />
-    }
-    <br />
-                <hr />
-                <br />
-}*@

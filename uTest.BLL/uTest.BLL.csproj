@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\SolvedTestDTO.cs" />
+    <Compile Include="DTO\StatisticDTO.cs" />
     <Compile Include="DTO\TaskDTO.cs" />
     <Compile Include="DTO\TestDTO.cs" />
     <Compile Include="DTO\QuestionDTO.cs" />

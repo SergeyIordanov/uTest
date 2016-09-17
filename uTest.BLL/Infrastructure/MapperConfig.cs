@@ -14,6 +14,7 @@ namespace uTest.BLL.Infrastructure
                 cfg.CreateMap<Question, QuestionDTO>();
                 cfg.CreateMap<Answer, AnswerDTO>();
                 cfg.CreateMap<SolvedTest, SolvedTestDTO>();
+                cfg.CreateMap<Task, TaskDTO>();
             });
         }
 
@@ -25,6 +26,7 @@ namespace uTest.BLL.Infrastructure
                 cfg.CreateMap<QuestionDTO, Question>();
                 cfg.CreateMap<AnswerDTO, Answer>();
                 cfg.CreateMap<SolvedTestDTO, SolvedTest>();
+                cfg.CreateMap<TaskDTO, Task>();
             });
         }
     }

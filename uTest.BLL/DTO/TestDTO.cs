@@ -13,7 +13,5 @@ namespace uTest.BLL.DTO
         public bool IsPrivate { get; set; }
 
         public virtual ICollection<QuestionDTO> Questions { get; set; }
-
-        public virtual ICollection<SolvedTestDTO> SolvedTests { get; set; }
     }
 }

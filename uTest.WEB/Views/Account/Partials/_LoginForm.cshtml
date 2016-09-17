@@ -9,17 +9,17 @@
     </div>
     @Html.AntiForgeryToken()
     <div class="row">
-        <div class="input-field col s8 push-s2">
+        <div class="input-field col l8 m8 s10 push-l2 push-m2 push-s1">
             @Html.LabelFor(model => model.Email, "Email")
             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @required = "required" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
-        <div class="input-field col s8 push-s2">
+        <div class="input-field col col l8 m8 s10 push-l2 push-m2 push-s1">
             @Html.LabelFor(model => model.Password, "Password")
             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @required = "required" } })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
         </div>
-        <div class="input-field col s8 push-s2 centralized">
+        <div class="input-field col l8 m8 s10 push-l2 push-m2 push-s1 centralized">
             <input type="submit" value="Send" class="btn btn-default main-color-background" />
         </div>
     </div>

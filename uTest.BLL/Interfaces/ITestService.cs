@@ -10,6 +10,8 @@ namespace uTest.BLL.Interfaces
     {
         void SolveTest(long testId, string userId, int result);
 
+        void SolveTask(TaskDTO task, int result);
+
         #region Create
 
         void CreateTest(TestDTO test);
@@ -86,6 +88,13 @@ namespace uTest.BLL.Interfaces
         /// <param name="testId">test id</param>
         /// <returns>Tasks collection</returns>
         IEnumerable<TaskDTO> GetTasks(long testId);
+
+        /// <summary>
+        /// Gets user statistic
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <returns>Class with statistic info</returns>
+        StatisticDTO GetStatistic(string userId);
 
         #endregion
 

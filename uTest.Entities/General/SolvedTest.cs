@@ -4,7 +4,7 @@ namespace uTest.Entities.General
 {
     public class SolvedTest
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public int Result { get; set; }

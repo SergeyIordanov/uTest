@@ -194,9 +194,11 @@
     <Compile Include="ViewModels\AnswerViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="ViewModels\SolvedTestViewModel.cs" />
+    <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\avatar.jpg" />
     <Content Include="Content\images\gamepad-new.png" />
     <Content Include="Content\images\gamepad.png" />
     <Content Include="Content\materialize\css\materialize.css" />

@@ -30,6 +30,25 @@ namespace uTest.BLL.Services
             Database.Save();
         }
 
+        public void SolveTask(TaskDTO taskDTO, int result)
+        {
+            Validator.ValidateTaskModel(taskDTO);
+            var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
+            var task = mapper.Map<Task>(taskDTO);
+            task.IsSolved = true;
+            var solvedTest = new SolvedTest
+            {
+                Result = result,
+                UserId = taskDTO.UserId,
+                Task = Database.Tasks.Get(task.Id),
+                Test = task.Test
+            };
+            Database.SolvedTests.Create(solvedTest);         
+            task.SolvedTest = solvedTest;
+            Database.Tasks.Update(task);
+            Database.Save();
+        }
+
         #region Create
 
         public void CreateTest(TestDTO testDTO)
@@ -55,7 +74,6 @@ namespace uTest.BLL.Services
             var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
             var question = mapper.Map<Question>(questionDTO);
             // Creating and saving
-            Database.Questions.Create(question);
             test.Questions.Add(question);
             Database.Tests.Update(test);
             Database.Save();
@@ -72,7 +90,6 @@ namespace uTest.BLL.Services
             var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
             var answer = mapper.Map<Answer>(answerDTO);
             // Creating and saving
-            Database.Answers.Create(answer);
             question.Answers.Add(answer);
             Database.Questions.Update(question);
             Database.Save();
@@ -89,7 +106,6 @@ namespace uTest.BLL.Services
             var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
             var task = mapper.Map<Task>(taskDTO);
             // Creating and saving
-            Database.Tasks.Create(task);
             test.Tasks.Add(task);
             Database.Tests.Update(test);
             Database.Save();
@@ -269,6 +285,26 @@ namespace uTest.BLL.Services
             var mapper = MapperConfig.GetConfigToDTO().CreateMapper();
 
             return mapper.Map<IEnumerable<TaskDTO>>(Database.Tasks.Find(task => task.Test.Id.Equals(testId)));
+        }
+
+        public StatisticDTO GetStatistic(string userId)
+        {
+            var result = new StatisticDTO {UserId = userId};
+            var solvedTests = Database.SolvedTests.Find(x => x.UserId.Equals(userId));
+            var tasks = Database.Tasks.Find(x => x.UserId.Equals(userId));
+            var solvedTestsList = solvedTests as IList<SolvedTest> ?? solvedTests.ToList();
+            if (solvedTests != null && solvedTestsList.Any())
+            {
+                result.SolvedTests = solvedTestsList.Count;
+                result.AvarageMark = solvedTestsList.Sum(x => x.Result) / solvedTestsList.Count;
+            }
+            var tasksList = tasks as IList<Task> ?? tasks.ToList();
+            if (tasks != null && tasksList.Any())
+            {
+                result.CompletedTasks = tasksList.Count(x => x.IsSolved && x.SolvedTest.Result >= x.MinResult);
+                result.FailedTasks = tasksList.Count(x => x.IsSolved && x.SolvedTest.Result < x.MinResult);
+            }
+            return result;
         }
 
         #endregion
