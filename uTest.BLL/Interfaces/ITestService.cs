@@ -8,20 +8,35 @@ namespace uTest.BLL.Interfaces
     /// </summary>
     public interface ITestService
     {
+        void SolveTest(long testId, string userId, int result);
+
         #region Create
 
         void CreateTest(TestDTO test);
+
+        void CreateQuestion(QuestionDTO question, long testId);
+
+        void CreateAnswer(AnswerDTO answer, long questionId);
+
         #endregion
 
         #region Update
 
         void UpdateTest(TestDTO test);
 
+        void UpdateQuestion(QuestionDTO question);
+
+        void UpdateAnswer(AnswerDTO answer);
+
         #endregion
 
         #region Delete
 
         void DeleteTest(long id);
+
+        void DeleteQuestion(long id);
+
+        void DeleteAnswer(long id);
 
         #endregion
 
@@ -37,6 +52,20 @@ namespace uTest.BLL.Interfaces
         /// <param name="searchString">Search request</param>
         /// <returns>Filtred tests collection</returns>
         IEnumerable<TestDTO> GetTests(string searchString);
+
+        /// <summary>
+        /// Gets SolvedTests for specified user
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <returns>SolvedTests collection</returns>
+        IEnumerable<SolvedTestDTO> GetSolvedTests(string userId);
+
+        /// <summary>
+        /// Gets SolvedTests for specified test
+        /// </summary>
+        /// <param name="testId">test id</param>
+        /// <returns>SolvedTests collection</returns>
+        IEnumerable<SolvedTestDTO> GetSolvedTests(long testId);
 
         #endregion
 

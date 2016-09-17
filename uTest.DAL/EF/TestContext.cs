@@ -11,6 +11,8 @@ namespace uTest.DAL.EF
 
         public virtual DbSet<Answer> Answers { get; set; }
 
+        public virtual DbSet<SolvedTest> SolvedTests { get; set; }
+
         /// <summary>
         /// Static constructor for setting DB initializer
         /// </summary>
@@ -28,6 +30,11 @@ namespace uTest.DAL.EF
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Test>()
+               .HasMany(a => a.SolvedTests)
+               .WithRequired(a => a.Test)
+               .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<Test>()
                .HasMany(a => a.Questions)
                .WithRequired(a => a.Test)

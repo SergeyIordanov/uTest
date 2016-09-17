@@ -21,7 +21,7 @@ namespace uTest.BLL.Services
                 throw new ValidationException("This property cannot be null", "Text");           
         }
 
-        public static void ValidateRAnswerModel(AnswerDTO answerDto)
+        public static void ValidateAnswerModel(AnswerDTO answerDto)
         {
             if (answerDto == null)
                 throw new ValidationException("Cannot create answer from empty", "");

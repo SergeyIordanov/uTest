@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace uTest.Auth.BLL.DTO
+﻿namespace uTest.Auth.BLL.DTO
 {
     public class UserDTO
     {
@@ -15,7 +13,5 @@ namespace uTest.Auth.BLL.DTO
         public string Name { get; set; }
 
         public string Role { get; set; }
-
-        public ICollection<SolvedTestDTO> SolvedTests { get; set; }
     }
 }

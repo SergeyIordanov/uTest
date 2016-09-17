@@ -57,7 +57,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL\DTO\SolvedTestDTO.cs" />
     <Compile Include="BLL\DTO\UserDTO.cs" />
     <Compile Include="BLL\Infrastructure\OperationDetails.cs" />
     <Compile Include="BLL\Interfaces\IServiceCreator.cs" />
