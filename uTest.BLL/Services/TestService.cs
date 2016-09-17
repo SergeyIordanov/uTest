@@ -78,6 +78,23 @@ namespace uTest.BLL.Services
             Database.Save();
         }
 
+        public void CreateTask(TaskDTO taskDTO, long testId)
+        {
+            // Using ValidationException for transfer validation data to presentation layer
+            Validator.ValidateTaskModel(taskDTO);
+            var test = Database.Tests.Get(testId);
+            if (test == null)
+                throw new ValidationException("Cannot get test for adding a task", "");
+            // Mapping DTO object into DB entity
+            var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
+            var task = mapper.Map<Task>(taskDTO);
+            // Creating and saving
+            Database.Tasks.Create(task);
+            test.Tasks.Add(task);
+            Database.Tests.Update(test);
+            Database.Save();
+        }
+
         #endregion
 
         #region Update
@@ -124,6 +141,20 @@ namespace uTest.BLL.Services
             Database.Save();
         }
 
+        public void UpdateTask(TaskDTO taskDTO)
+        {
+            // Using ValidationException for transfer validation data to presentation layer
+            if (Database.Tasks.Get(taskDTO.Id) == null)
+                throw new ValidationException("Task wasn't found", "");
+            Validator.ValidateTaskModel(taskDTO);
+            // Mapping DTO object into DB entity
+            var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
+            var task = mapper.Map<Task>(taskDTO);
+            // Updating & saving
+            Database.Tasks.Update(task);
+            Database.Save();
+        }
+
         #endregion
 
         #region Delete
@@ -155,6 +186,16 @@ namespace uTest.BLL.Services
                 throw new ValidationException("Answer wasn't found", "");
             // Deleting & saving
             Database.Answers.Delete(id);
+            Database.Save();
+        }
+
+        public void DeleteTask(long id)
+        {
+            // Using ValidationException for transfer validation data to presentation layer
+            if (!Database.Tasks.Find(x => x.Id == id).Any())
+                throw new ValidationException("Task wasn't found", "");
+            // Deleting & saving
+            Database.Tasks.Delete(id);
             Database.Save();
         }
 
@@ -209,6 +250,25 @@ namespace uTest.BLL.Services
             var mapper = MapperConfig.GetConfigToDTO().CreateMapper();
 
             return mapper.Map<IEnumerable<SolvedTestDTO>>(Database.SolvedTests.Find(test => test.Test.Id.Equals(testId)));
+        }
+
+        public IEnumerable<TaskDTO> GetTasks(string userId)
+        {
+            // Using of Automapper for projection the Car entity into the CarDTO
+            var mapper = MapperConfig.GetConfigToDTO().CreateMapper();
+            // Returns all items if user id string is empty or null
+            if (string.IsNullOrEmpty(userId))
+                return mapper.Map<IEnumerable<TaskDTO>>(Database.Tasks.GetAll());
+
+            return mapper.Map<IEnumerable<TaskDTO>>(Database.Tasks.Find(task => task.UserId.Equals(userId)));
+        }
+
+        public IEnumerable<TaskDTO> GetTasks(long testId)
+        {
+            // Using of Automapper for projection the Car entity into the CarDTO
+            var mapper = MapperConfig.GetConfigToDTO().CreateMapper();
+
+            return mapper.Map<IEnumerable<TaskDTO>>(Database.Tasks.Find(task => task.Test.Id.Equals(testId)));
         }
 
         #endregion

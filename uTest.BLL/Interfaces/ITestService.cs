@@ -18,6 +18,8 @@ namespace uTest.BLL.Interfaces
 
         void CreateAnswer(AnswerDTO answer, long questionId);
 
+        void CreateTask(TaskDTO task, long testId);
+
         #endregion
 
         #region Update
@@ -28,6 +30,8 @@ namespace uTest.BLL.Interfaces
 
         void UpdateAnswer(AnswerDTO answer);
 
+        void UpdateTask(TaskDTO task);
+
         #endregion
 
         #region Delete
@@ -37,6 +41,8 @@ namespace uTest.BLL.Interfaces
         void DeleteQuestion(long id);
 
         void DeleteAnswer(long id);
+
+        void DeleteTask(long id);
 
         #endregion
 
@@ -66,6 +72,20 @@ namespace uTest.BLL.Interfaces
         /// <param name="testId">test id</param>
         /// <returns>SolvedTests collection</returns>
         IEnumerable<SolvedTestDTO> GetSolvedTests(long testId);
+
+        /// <summary>
+        /// Gets tasks for specified user
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <returns>Tasks collection</returns>
+        IEnumerable<TaskDTO> GetTasks(string userId);
+
+        /// <summary>
+        /// Gets tasks for specified test
+        /// </summary>
+        /// <param name="testId">test id</param>
+        /// <returns>Tasks collection</returns>
+        IEnumerable<TaskDTO> GetTasks(long testId);
 
         #endregion
 

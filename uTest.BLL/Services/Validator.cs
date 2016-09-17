@@ -28,5 +28,13 @@ namespace uTest.BLL.Services
             if (answerDto.Text == null)
                 throw new ValidationException("This property cannot be empty", "Text");
         }
+
+        public static void ValidateTaskModel(TaskDTO taskDto)
+        {
+            if (taskDto == null)
+                throw new ValidationException("Cannot create task from empty", "");
+            if (string.IsNullOrEmpty(taskDto.UserId))
+                throw new ValidationException("This property cannot be empty", "UserId");
+        }
     }
 }
