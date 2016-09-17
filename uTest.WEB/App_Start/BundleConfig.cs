@@ -16,7 +16,10 @@ namespace uTest.WEB
                         "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/materialize").Include(
-                        "~/Scripts/materialize/materialize.js"));            
+                        "~/Scripts/materialize/materialize.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/init").Include(
+                        "~/Scripts/initialization.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/site.css"));
