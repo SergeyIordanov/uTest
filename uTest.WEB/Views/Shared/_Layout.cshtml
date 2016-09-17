@@ -2,15 +2,29 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewBag.Title</title>
+    
+    @Styles.Render("~/Content/materialize")
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    
+
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">uTest</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>@Html.ActionLink("LogIn", "Login", new {area = "", controller = "Account"})</li>
+                <li>@Html.ActionLink("Register", "Register", new { area = "", controller = "Account" })</li>
+            </ul>
+        </div>
+    </nav>
+
     @RenderBody()
-        
+
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/ajax")
+    @Scripts.Render("~/bundles/materialize")
     @RenderSection("scripts", required: false)
 </body>
 </html>
