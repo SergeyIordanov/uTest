@@ -11,6 +11,8 @@ namespace uTest.DAL.EF
 
         public virtual DbSet<Answer> Answers { get; set; }
 
+        public virtual DbSet<Task> Tasks { get; set; }
+
         public virtual DbSet<SolvedTest> SolvedTests { get; set; }
 
         /// <summary>
@@ -30,6 +32,16 @@ namespace uTest.DAL.EF
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Task>()
+               .HasOptional(a => a.SolvedTest)
+               .WithOptionalDependent(a => a.Task)
+               .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Test>()
+               .HasMany(a => a.Tasks)
+               .WithRequired(a => a.Test)
+               .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<Test>()
                .HasMany(a => a.SolvedTests)
                .WithRequired(a => a.Test)

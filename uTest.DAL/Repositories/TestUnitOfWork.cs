@@ -12,6 +12,7 @@ namespace uTest.DAL.Repositories
         private QuestionRepository _questionRepository;
         private AnswerRepository _answerRepository;
         private SolvedTestRepository _solvedTestRepository;
+        private TaskRepository _taskRepository;
 
 
         public TestUnitOfWork(string connectionString)
@@ -25,6 +26,8 @@ namespace uTest.DAL.Repositories
         public IRepository<Answer> Answers => _answerRepository ?? (_answerRepository = new AnswerRepository(_db));
 
         public IRepository<SolvedTest> SolvedTests => _solvedTestRepository ?? (_solvedTestRepository = new SolvedTestRepository(_db));
+
+        public IRepository<Task> Tasks => _taskRepository ?? (_taskRepository = new TaskRepository(_db));
 
         public void Save()
         {

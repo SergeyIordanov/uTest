@@ -60,6 +60,7 @@
     <Compile Include="General\Answer.cs" />
     <Compile Include="General\Question.cs" />
     <Compile Include="General\SolvedTest.cs" />
+    <Compile Include="General\Task.cs" />
     <Compile Include="General\Test.cs" />
     <Compile Include="Identity\ApplicationRole.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />

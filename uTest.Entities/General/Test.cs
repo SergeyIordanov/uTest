@@ -18,5 +18,7 @@ namespace uTest.Entities.General
         public virtual ICollection<Question> Questions { get; set; }
 
         public virtual ICollection<SolvedTest> SolvedTests { get; set; }
+
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

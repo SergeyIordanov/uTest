@@ -2,12 +2,13 @@
 
 namespace uTest.Entities.General
 {
-    public class SolvedTest
+    public class Task
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        [Required]
-        public int Result { get; set; }
+        public bool IsSolved { get; set; }
+
+        public int MinResult { get; set; }
 
         [Required]
         public string UserId { get; set; }
@@ -15,6 +16,6 @@ namespace uTest.Entities.General
         [Required]
         public virtual Test Test { get; set; }
 
-        public virtual Task Task { get; set; }
+        public virtual SolvedTest SolvedTest { get; set; }
     }
 }

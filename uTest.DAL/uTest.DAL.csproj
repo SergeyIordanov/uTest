@@ -57,6 +57,7 @@
     <Compile Include="Repositories\AnswerRepository.cs" />
     <Compile Include="Repositories\QuestionRepository.cs" />
     <Compile Include="Repositories\SolvedTestRepository.cs" />
+    <Compile Include="Repositories\TaskRepository.cs" />
     <Compile Include="Repositories\TestRepository.cs" />
     <Compile Include="Repositories\TestUnitOfWork.cs" />
   </ItemGroup>
