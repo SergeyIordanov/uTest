@@ -22,10 +22,8 @@ namespace uTest.WEB.Controllers
         {
             //TEST
             _testService.CreateTask(new TaskDTO {MinResult = 60, UserId = User.Identity.GetUserId()},  1);
-            _testService.CreateTask(new TaskDTO { MinResult = 70, UserId = User.Identity.GetUserId() }, 2);
 
-            _testService.SolveTask(_testService.GetTasks(User.Identity.GetUserId()).First(), 50);
-            _testService.SolveTask(_testService.GetTasks(User.Identity.GetUserId()).Last(), 80);
+            _testService.SolveTask(_testService.GetTasks(User.Identity.GetUserId()).Last(), 40);
             //----
 
             var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();

@@ -23,6 +23,8 @@ namespace uTest.BLL.Services
             var test = Database.Tests.Get(testId);
             if (test == null)
                 throw new ValidationException("Cannot get test for solving", "");
+            if (test.SolvedTests.Any(x => x.UserId.Equals(userId)))
+                throw new ValidationException("Test was already solved by this user", "");
             if (string.IsNullOrEmpty(userId))
                 throw new ValidationException("User id cannot be empty", "");
             var solvedTest = new SolvedTest { Result = result, Test = test, UserId = userId };
@@ -33,6 +35,8 @@ namespace uTest.BLL.Services
         public void SolveTask(TaskDTO taskDTO, int result)
         {
             Validator.ValidateTaskModel(taskDTO);
+            if (taskDTO.IsSolved)
+                throw new ValidationException("Task was already solved", "");
             var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
             var task = mapper.Map<Task>(taskDTO);
             task.IsSolved = true;
@@ -41,7 +45,7 @@ namespace uTest.BLL.Services
                 Result = result,
                 UserId = taskDTO.UserId,
                 Task = Database.Tasks.Get(task.Id),
-                Test = task.Test
+                Test = Database.Tests.Get(task.Test.Id)
             };
             Database.SolvedTests.Create(solvedTest);         
             task.SolvedTest = solvedTest;
