@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using uTest.BLL.DTO;
 using uTest.BLL.Infrastructure;
 using uTest.BLL.Interfaces;
 using uTest.WEB.ViewModels;
@@ -21,9 +19,9 @@ namespace uTest.WEB.Controllers
         public ActionResult Index()
         {
             //TEST
-            _testService.CreateTask(new TaskDTO {MinResult = 60, UserId = User.Identity.GetUserId()},  1);
+            //_testService.CreateTask(new TaskDTO {MinResult = 60, UserId = User.Identity.GetUserId()},  1);
 
-            _testService.SolveTask(_testService.GetTasks(User.Identity.GetUserId()).Last(), 40);
+            //_testService.SolveTask(_testService.GetTasks(User.Identity.GetUserId()).Last(), 40);
             //----
 
             var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();

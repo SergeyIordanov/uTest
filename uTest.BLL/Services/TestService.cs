@@ -253,6 +253,14 @@ namespace uTest.BLL.Services
             return mapper.Map<IEnumerable<TestDTO>>(Database.Tests.Find(test => (test.Name + " " + test.Description).ToLower().Contains(searchString.ToLower())));
         }
 
+        public IEnumerable<TestDTO> GetPublicTests()
+        {
+            // Using of Automapper for projection the Car entity into the CarDTO
+            var mapper = MapperConfig.GetConfigToDTO().CreateMapper();
+
+            return mapper.Map<IEnumerable<TestDTO>>(Database.Tests.Find(test => !test.IsPrivate));
+        }
+
         public IEnumerable<SolvedTestDTO> GetSolvedTests(string userId)
         {
             // Using of Automapper for projection the Car entity into the CarDTO

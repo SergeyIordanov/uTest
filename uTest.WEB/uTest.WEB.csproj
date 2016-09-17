@@ -183,6 +183,8 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -286,6 +288,8 @@
     <Content Include="Views\Account\SuccessRegister.cshtml" />
     <Content Include="Views\Account\Partials\_LoginForm.cshtml" />
     <Content Include="Views\Account\Partials\_RegisterForm.cshtml" />
+    <None Include="Views\Task\Index.cshtml" />
+    <None Include="Views\Test\Public.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

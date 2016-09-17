@@ -1,0 +1,70 @@
+﻿@model IEnumerable<uTest.WEB.ViewModels.TestViewModel>
+@{
+    ViewBag.Title = "Tests";
+}
+
+<div class="row"></div>
+<div class="row">
+    <div class="col l3 hide-on-med-and-down pushpin">
+        <div class="moving-block">
+            <div class="row">
+                <div id="right-sidebar" class="card centralized z-depth-0">
+                    <p class="card-title flow-text white-text menu-par">Menu</p>
+                    <div class="collection with-header no-margin-top">
+                        @Html.RouteLink("Home", new { controller = "Home", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("My tasks", new { controller = "Task", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("Public tests", new { controller = "Test", action = "Public" }, new { @class = "collection-item main-color-background active" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l9 m12 s12 push-l3">
+        <div class="row">
+            <div class="col l11 m12 s12">
+                <div class="row">
+                    <p class="flow-text welcome-text centralized">Public tests</p>
+                    <p class="flow-text sub-welcome-text centralized">Choose the test you're interested in and pass it!</p>
+                    <hr class="colored-hr-thin" />
+                </div>
+                <div class="row">
+                    <div class="col l10 m10 s12 push-l1 push-m1">
+                        @foreach (var test in Model)
+                        {
+                            <div class="card z-depth-bordered">
+                                <a href="/Test/SolveTest/@test.Id"><p class="card-title flow-text white-text menu-par centralized sublined-text-on-hover">@test.Name</p></a>
+                                <div class="card-content no-margin-top">
+                                    @if (test.Description != null)
+                                    {
+                                        <p class="flow-text sub-welcome-text">@test.Description</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="flow-text sub-welcome-text">There is no description for this test</p>
+                                    }
+                                    <p class="flow-text sub-welcome-text">------------------</p>
+                                    @if (test.Questions != null)
+                                    {
+                                        <p class="flow-text sub-welcome-text">Questions: @test.Questions.Count</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="flow-text sub-welcome-text">Questions: 0</p>
+                                    }
+                                    @if (test.SolvedTests != null)
+                                    {
+                                        <p class="flow-text sub-welcome-text">Solved by @test.SolvedTests.Count users</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="flow-text sub-welcome-text">Solved by 0 users</p>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

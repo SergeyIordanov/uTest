@@ -62,6 +62,12 @@ namespace uTest.BLL.Interfaces
         IEnumerable<TestDTO> GetTests(string searchString);
 
         /// <summary>
+        /// Gets tests marked as 'public'
+        /// </summary>
+        /// <returns>Public tests collection</returns>
+        IEnumerable<TestDTO> GetPublicTests();
+
+        /// <summary>
         /// Gets SolvedTests for specified user
         /// </summary>
         /// <param name="userId">user id</param>

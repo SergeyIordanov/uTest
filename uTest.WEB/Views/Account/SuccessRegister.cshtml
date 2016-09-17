@@ -1,7 +1,35 @@
 ﻿
 @{
-    ViewBag.Title = "SuccessRegister";
+    ViewBag.Title = "Successful register";
 }
 
-<h2>SuccessRegister</h2>
+<div class="row"></div>
+<div class="row">
+    <div class="col l3 hide-on-med-and-down pushpin">
+        <div class="moving-block">
+            <div class="row">
+                <div id="right-sidebar" class="card centralized z-depth-0">
+                    <p class="card-title flow-text white-text menu-par">Menu</p>
+                    <div class="collection with-header no-margin-top">
+                        @Html.RouteLink("Home", new { controller = "Home", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("My tasks", new { controller = "Task", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("Public tests", new { controller = "Test", action = "Public" }, new { @class = "collection-item main-color-text" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l9 m12 s12 push-l3">
+        <div class="row">
+            <div class="col l11 m12 s12">
+                <div class="row">
+                    <p class="flow-text welcome-text centralized">Registration successful!</p>
+                    <p class="flow-text sub-welcome-text centralized">Use your credentials to login</p>
+                    <hr class="colored-hr-thin" />
+                    @Html.Partial("Partials/_LoginForm")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
