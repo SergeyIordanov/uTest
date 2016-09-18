@@ -12,6 +12,7 @@ using uTest.WEB.ViewModels;
 
 namespace uTest.WEB.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdminUserController : Controller
     {
         private IUserService UserService =>

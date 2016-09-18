@@ -1,0 +1,60 @@
+﻿@model IEnumerable<uTest.WEB.ViewModels.TestViewModel>
+
+<div class="col l10 m10 s12 push-l1 push-m1">
+    @if (Model == null || !Model.Any())
+    {
+        <p class="flow-text sub-welcome-text">There are no tests yet</p>
+    }
+    else
+    {
+        foreach (var test in Model)
+        {
+            <div class="card z-depth-bordered">
+                <a href="/Test/Details/@test.Id">
+                    <p class="card-title flow-text white-text menu-par centralized sublined-text-on-hover">@test.Name</p>
+                </a>
+                <div class="card-content no-margin-top">
+                    @if (test.Description != null)
+                    {
+                        <p class="flow-text sub-welcome-text">@test.Description</p>
+                    }
+                    else
+                    {
+                        <p class="flow-text sub-welcome-text">There is no description for this test</p>
+                    }
+                    <div class="row no-margin-bot">
+                        <div class="col s12 m6 l6">
+                            <p class="flow-text sub-welcome-text">------------------</p>
+                            @if (test.Questions != null)
+                            {
+                                <p class="flow-text sub-welcome-text">Questions: @test.Questions.Count</p>
+                            }
+                            else
+                            {
+                                <p class="flow-text sub-welcome-text">Questions: 0</p>
+                            }
+                            @if (test.SolvedTests != null)
+                            {
+                                <p class="flow-text sub-welcome-text">Solved by @test.SolvedTests.Count users</p>
+                            }
+                            else
+                            {
+                                <p class="flow-text sub-welcome-text">Solved by 0 users</p>
+                            }
+                        </div>
+                        <div class="col s12 m3 l3 centralized" id="details-button">
+                            <a class="btn btn-default main-color-background" href="/Admin/AdminTest/Edit/@test.Id">Edit</a>
+                        </div>
+                        <div class="col s12 m3 l3 centralized" id="details-button">
+                            <a class="btn btn-default red" data-ajax="true" data-ajax-confirm="Are you sure you want to delete this test? All solutions will be also deleted!"
+                               data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#tests_target" href="/Admin/AdminTest/Delete/@test.Id">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"></div>
+        }
+    }
+</div>

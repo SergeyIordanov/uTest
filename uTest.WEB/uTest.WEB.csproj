@@ -275,6 +275,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Areas\Admin\Views\AdminUser\Index.cshtml" />
     <Content Include="Areas\Admin\Views\AdminUser\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminTest\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminTest\Partials\_TestsList.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminTest\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminTest\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -325,7 +329,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\AdminTest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
