@@ -1,0 +1,128 @@
+﻿@model IEnumerable<uTest.WEB.ViewModels.UserViewModel>
+
+@{
+    ViewBag.Title = "Admin/Users";
+}
+
+<div class="row"></div>
+<div class="row">
+    <div class="col l3 hide-on-med-and-down pushpin">
+        <div class="moving-block">
+            <div class="row">
+                <div id="right-sidebar" class="card centralized z-depth-0">
+                    <p class="card-title flow-text white-text menu-par">Menu</p>
+                    <div class="collection with-header no-margin-top">
+                        @Html.RouteLink("Home", new { area = "Admin", controller = "Admin", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("Manage tests", new { area = "Admin", controller = "AdminTest", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("Manage users", new { area = "Admin", controller = "AdminUser", action = "Index" }, new { @class = "collection-item main-color-background active" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l9 m12 s12 push-l3">
+        <div class="row">
+            <div class="col l11 m12 s12">
+                <div class="row">
+                    <p class="flow-text welcome-text centralized">Users</p>
+                    <p class="flow-text sub-welcome-text centralized">Manage users here</p>
+                    <hr class="colored-hr-thin" />
+                </div>
+                <div class="row">
+                    @if (!Model.Any())
+                    {
+                        <p class="flow-text centralized welcome-text">There are no users yet</p>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <!--Desktop & tablets-->
+                            <div class="col s12 hide-on-small-and-down">
+                                <table class="striped">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="id"></th>
+                                        <th data-field="name">Name</th>
+                                        <th data-field="name">E-mail</th>
+                                        <th data-field="role">Roles</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            @if (user.Role.Equals("user"))
+                                            {
+                                                <td><i class="material-icons">face</i></td>
+                                            }
+                                            else if (user.Role.Equals("manager"))
+                                            {
+                                                <td><i class="material-icons">perm_contact_calendar</i></td>
+                                            }
+                                            else if (user.Role.Equals("admin"))
+                                            {
+                                                <td><i class="material-icons">school</i></td>
+                                            }
+                                            else
+                                            {
+                                                <td><i class="material-icons">face</i></td>
+                                            }
+                                            <td>@user.Name</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.Role</td>
+                                            <td>
+                                                @Html.ActionLink("Details", "Details", new {area = "Admin", controller = "AdminUser", id = user.Id}, new {@class = "blue-text"})
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--Mobile-->
+                            <div class="col s12 hide-on-med-and-up">
+                                <table class="striped">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="id"></th>
+                                        <th data-field="name">E-mail</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            @if (user.Role.Equals("user"))
+                                            {
+                                                <td><i class="material-icons">face</i></td>
+                                            }
+                                            else if (user.Role.Equals("manager"))
+                                            {
+                                                <td><i class="material-icons">perm_contact_calendar</i></td>
+                                            }
+                                            else if (user.Role.Equals("admin"))
+                                            {
+                                                <td><i class="material-icons">school</i></td>
+                                            }
+                                            else
+                                            {
+                                                <td><i class="material-icons">face</i></td>
+                                            }
+                                            <td>@user.Email</td>
+                                            <td>
+                                                @Html.ActionLink("More", "Details", new {area = "Admin", controller = "AdminUser", id = user.Id}, new {@class = "blue-text"})
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

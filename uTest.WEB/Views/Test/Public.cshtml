@@ -42,7 +42,7 @@
                                     <a href="/Test/Details/@test.Id">
                                         @if (test.SolvedTests.Any(x => x.UserId.Equals(User.Identity.GetUserId())))
                                         {
-                                            <p class="card-title flow-text white-text menu-par-solved centralized sublined-text-on-hover">@test.Name (solved)</p>
+                                            <p class="card-title flow-text white-text menu-par-solved centralized sublined-text-on-hover">@test.Name (passed)</p>
                                         }
                                         else
                                         {

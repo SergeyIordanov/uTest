@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using uTest.Auth.BLL.DTO;
 using uTest.BLL.DTO;
 using uTest.WEB.ViewModels;
 
@@ -15,6 +16,7 @@ namespace uTest.WEB.Util
                 cfg.CreateMap<AnswerViewModel, AnswerDTO>();
                 cfg.CreateMap<SolvedTestViewModel, SolvedTestDTO>();
                 cfg.CreateMap<StatisticViewModel, StatisticDTO>();
+                cfg.CreateMap<UserViewModel, UserDTO>();
             });
         }
 
@@ -27,6 +29,7 @@ namespace uTest.WEB.Util
                 cfg.CreateMap<AnswerDTO, AnswerViewModel>();
                 cfg.CreateMap<SolvedTestDTO, SolvedTestViewModel>();
                 cfg.CreateMap<StatisticDTO, StatisticViewModel>();
+                cfg.CreateMap<UserDTO, UserViewModel>();
             });
         }
     }
