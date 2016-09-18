@@ -180,6 +180,14 @@ footer.page-footer {
     margin-bottom: 0;
 }
 
+.menu-par-solved {
+    background-color: #8EDA76;
+    padding-top: 24px;
+    margin-top: 0;
+    padding-bottom: 24px;
+    margin-bottom: 0;
+}
+
 .moving-block {
     width: 18%;
     position: fixed;
@@ -187,4 +195,8 @@ footer.page-footer {
 
 #details-button {
     padding-top: 40px;
+}
+
+#btn-home {
+    margin-bottom: 15px;
 }

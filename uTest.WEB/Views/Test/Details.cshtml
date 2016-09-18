@@ -1,4 +1,5 @@
-﻿@model uTest.WEB.ViewModels.TestViewModel
+﻿@using Microsoft.AspNet.Identity
+@model uTest.WEB.ViewModels.TestViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -48,14 +49,28 @@
                     @if (Model.SolvedTests != null)
                     {
                         <p class="flow-text sub-welcome-text">Solved by @Model.SolvedTests.Count users</p>
+                        if (Model.SolvedTests.Any(x => x.UserId.Equals(User.Identity.GetUserId())))
+                        {
+                            <p class="flow-text avarage-text centralized">Your result: @Model.SolvedTests.Find(x => x.UserId.Equals(User.Identity.GetUserId())).Result/100</p>
+                        }
                     }
                     else
                     {
                         <p class="flow-text sub-welcome-text">Solved by 0 users</p>
                     }
-                    <div class="centralized">
-                        <a class="btn btn-default main-color-background" href="/Test/SolveTest/@Model.Id">Start test</a>
-                    </div>
+                    @if (Model.SolvedTests != null && Model.SolvedTests.Any(x => x.UserId.Equals(User.Identity.GetUserId())))
+                    {
+                        <div class="centralized">
+                            <a class="btn btn-default main-color-background" href="/Test/SolveTest/@Model.Id">Pass the test again</a>
+                            <p class="flow-text sub-welcome-text centralized">(Your preveous result will be deleted)</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="centralized">
+                            <a class="btn btn-default main-color-background" href="/Test/SolveTest/@Model.Id">Pass the test</a>
+                        </div>
+                    }                   
                 </div>
             </div>
         </div>

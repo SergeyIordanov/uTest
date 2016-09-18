@@ -1,4 +1,5 @@
-﻿@model IEnumerable<uTest.WEB.ViewModels.TestViewModel>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<uTest.WEB.ViewModels.TestViewModel>
 @{
     ViewBag.Title = "Tests";
 }
@@ -29,7 +30,7 @@
                 </div>
                 <div class="row">
                     <div class="col l10 m10 s12 push-l1 push-m1">
-                        @if (!Model.Any())
+                        @if (Model == null || !Model.Any())
                         {
                             <p class="flow-text sub-welcome-text">There are no public tests yet</p>
                         }
@@ -39,7 +40,15 @@
                             {
                                 <div class="card z-depth-bordered">
                                     <a href="/Test/Details/@test.Id">
-                                        <p class="card-title flow-text white-text menu-par centralized sublined-text-on-hover">@test.Name</p></a>
+                                        @if (test.SolvedTests.Any(x => x.UserId.Equals(User.Identity.GetUserId())))
+                                        {
+                                            <p class="card-title flow-text white-text menu-par-solved centralized sublined-text-on-hover">@test.Name (solved)</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="card-title flow-text white-text menu-par centralized sublined-text-on-hover">@test.Name</p>
+                                        }                                      
+                                    </a>
                                     <div class="card-content no-margin-top">
                                         @if (test.Description != null)
                                         {

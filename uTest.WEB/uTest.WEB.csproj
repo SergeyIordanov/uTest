@@ -294,6 +294,7 @@
     <None Include="Views\Test\Public.cshtml" />
     <Content Include="Views\Test\Details.cshtml" />
     <Content Include="Views\Test\SolveTest.cshtml" />
+    <Content Include="Views\Test\TestResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

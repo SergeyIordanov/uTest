@@ -94,6 +94,7 @@ namespace uTest.WEB.Controllers
         {
             UserService.SetInitialData(new UserDTO
             {
+                Id = "1234",
                 Email = "admin@gmail.com",
                 UserName = "admin@gmail.com",
                 Password = "admin123",

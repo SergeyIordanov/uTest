@@ -219,6 +219,15 @@ namespace uTest.BLL.Services
             Database.Save();
         }
 
+        public void DeleteSolvedTests(long testId, string userId)
+        {
+            var solvedTests = Database.SolvedTests.Find(x => x.Test.Id == testId && x.UserId.Equals(userId));
+            foreach (var solvedTest in solvedTests)
+            {
+                Database.SolvedTests.Delete(solvedTest.Id);
+            }
+        }
+
         #endregion
 
         #region Get

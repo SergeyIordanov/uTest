@@ -46,6 +46,8 @@ namespace uTest.BLL.Interfaces
 
         void DeleteTask(long id);
 
+        void DeleteSolvedTests(long testId, string userId);
+
         #endregion
 
         #region Get

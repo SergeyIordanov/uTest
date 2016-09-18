@@ -17,6 +17,6 @@ namespace uTest.WEB.ViewModels
 
         public virtual ICollection<QuestionViewModel> Questions { get; set; }
 
-        public virtual ICollection<SolvedTestViewModel> SolvedTests { get; set; }
+        public List<SolvedTestViewModel> SolvedTests { get; set; }
     }
 }

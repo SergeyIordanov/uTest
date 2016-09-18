@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -25,23 +24,31 @@ namespace uTest.WEB.Controllers
         public ActionResult Public()
         {
             var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();
-            return View(mapper.Map<IEnumerable<TestViewModel>>(_testService.GetPublicTests()));
+            var tests = mapper.Map<IEnumerable<TestViewModel>>(_testService.GetPublicTests());
+            foreach (var test in tests)
+            {
+                test.SolvedTests =
+                    mapper.Map<IEnumerable<SolvedTestViewModel>>(_testService.GetSolvedTests(test.Id)).ToList();
+            }
+            return View(tests);
         }
 
         [HttpGet]
         public ActionResult Details(long id)
         {
-            TestDTO test;
+            TestViewModel testView;
             try
             {
-                test = _testService.GetTest(id);
+                var test = _testService.GetTest(id);           
+                var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();
+                testView = mapper.Map<TestViewModel>(test);
+                testView.SolvedTests = mapper.Map<IEnumerable<SolvedTestViewModel>>(_testService.GetSolvedTests(testView.Id)).ToList();
             }
             catch (ValidationException ex)
             {
                 return View("Error", ex);
             }
-            var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();
-            return View(mapper.Map<TestViewModel>(test));
+            return View(testView);
         }
 
         [HttpGet]
@@ -74,7 +81,8 @@ namespace uTest.WEB.Controllers
                 return View("Error", ex);
             }
             var allAnswers = new List<string>();
-            allAnswers.AddRange(answers);
+            if(answers != null)
+                allAnswers.AddRange(answers);
             allAnswers.AddRange(from a in Request.Form.AllKeys where a.Contains("radio") select Request.Form[a]);
 
             int rightQuestions = 0;
@@ -99,9 +107,17 @@ namespace uTest.WEB.Controllers
 
             var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();
             var solvedTestView = new SolvedTestViewModel {Test = mapper.Map<TestViewModel>(test), UserId = User.Identity.GetUserId(), Result = res};
-            _testService.SolveTest(test.Id, User.Identity.GetUserId(), res);
-
-            return RedirectToAction("TestResult", solvedTestView);
+            try
+            {
+                _testService.SolveTest(test.Id, User.Identity.GetUserId(), res);
+            }
+            catch (ValidationException)
+            {               
+                _testService.DeleteSolvedTests(testId, User.Identity.GetUserId());
+                _testService.SolveTest(test.Id, User.Identity.GetUserId(), res);
+            }
+            ViewBag.Solved = rightQuestions;
+            return View("TestResult", solvedTestView);
         }
     }
 }
