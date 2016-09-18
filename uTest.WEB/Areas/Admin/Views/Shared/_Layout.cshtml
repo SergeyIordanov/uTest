@@ -1,0 +1,114 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    @Styles.Render("~/Content/materialize")
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/Admin/Admin/Index" class="brand-logo logo-pad"><i class="material-icons left">gamepad</i>uTest Admin</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li>Hello, @User.Identity.GetUserName() </li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>@Html.ActionLink("Close admin panel", "Index", new { area = "", controller = "Home" })</li>
+                        }
+                        <li>@Html.ActionLink("LogOut", "Logout", new { area = "", controller = "Account" })</li>
+                    </ul>
+                }
+                else
+                {
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li>@Html.ActionLink("LogIn", "Login", new { area = "", controller = "Account" })</li>
+                        <li>@Html.ActionLink("Register", "Register", new { area = "", controller = "Account" })</li>
+                    </ul>
+                }
+                <ul class="side-nav" id="mobile-demo">
+
+                    <li class="centralized mobile-logo-wrapper"><a href="/Home/Index"><img class="mobile-logo-pad" height="90" src="~/Content/images/gamepad-new.png" /></a></li>
+                    <li>
+                        @*@using (Html.BeginForm("Search", "Test", FormMethod.Get))
+                        {*@
+                            <div class="input-field search-field">
+                                <input id="search" name="searchString" type="search" placeholder="Search tests" required>
+                                <label for="search"><i class="material-icons">search</i></label>
+                                <i class="material-icons">close</i>
+                            </div>
+                        @*}*@
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="/Home/Index">@User.Identity.GetUserName()</a></li>
+                        if (User.IsInRole("admin"))
+                        {
+                            <li>@Html.ActionLink("Close admin area", "Index", new { area = "", controller = "Home" })</li>
+                        }
+                        <li>@Html.ActionLink("LogOut", "Logout", new { area = "", controller = "Account" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("LogIn", "Login", new { area = "", controller = "Account" })</li>
+                            <li>@Html.ActionLink("Register", "Register", new { area = "", controller = "Account" })</li>
+                    }
+                    <hr class="colored-hr-thin" />
+                    <li><a href="/Admin/Admin/Index">Home</a></li>
+                    <li><a href="/Admin/AdminTest/Index">Manage tests</a></li>
+                    <li><a href="/Admin/AdminUser/Index">Manage users</a></li>
+                    <li><a href="/Home/Index">Close admin panel</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <main>
+        <div class="row">
+            <div class="col s12 m12 l12">
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 m6 s12">
+                    <h5 class="white-text">Hope for your feedback</h5>
+                    <p class="grey-text text-lighten-4">e-mail: <a href="mailto:sergey.ior97@gmail.com">sergey.ior97@gmail.com</a></p>
+                    <p class="grey-text text-lighten-4">facebook: <a href="https://www.facebook.com/sergey.iordanov">facebook.com/sergey.iordanov</a></p>
+                </div>
+                <div class="col l4 offset-l2 m4 offset-m2 s12">
+                    <h5 class="white-text">Admin content</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="/Admin/AdminTest/Index">Manage tests</a></li>
+                        <li><a class="grey-text text-lighten-3" href="/Admin/AdminUser/Index">Manage users</a></li>
+                        <li><a class="grey-text text-lighten-3" href="/Home/Index">Close admin panel</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2016 Iordanov Sergey. All rights reserved.
+                <a class="grey-text text-lighten-4 right" href="https://github.com/SergeyIordanov/uTest">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/ajax")
+    @Scripts.Render("~/bundles/materialize")
+    @Scripts.Render("~/bundles/init")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

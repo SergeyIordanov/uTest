@@ -21,6 +21,10 @@
                     {
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
                             <li>Hello, @User.Identity.GetUserName() </li>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <li>@Html.ActionLink("Administration", "Index", new { area = "Admin", controller = "Admin" })</li>
+                            }
                             <li>@Html.ActionLink("LogOut", "Logout", new { area = "", controller = "Account" })</li>
                         </ul>
                     }
@@ -35,18 +39,22 @@
 
                         <li class="centralized mobile-logo-wrapper"><a href="/Home/Index"><img class="mobile-logo-pad" height="90" src="~/Content/images/gamepad-new.png"/></a></li>
                         <li>
-                            @using (Html.BeginForm("Search", "Test", FormMethod.Get))
-                            {
+                            @*@using (Html.BeginForm("Search", "Test", FormMethod.Get))
+                            {*@
                                 <div class="input-field search-field">
                                     <input id="search" name="searchString" type="search" placeholder="Search tests" required>
                                     <label for="search"><i class="material-icons">search</i></label>
                                     <i class="material-icons">close</i>
                                 </div>
-                            }
+                            @*}*@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li><a href="/Home/Index">@User.Identity.GetUserName()</a></li>
+                            if (User.IsInRole("admin"))
+                            {
+                                <li>@Html.ActionLink("Administration", "Index", new { area = "Admin", controller = "Admin" })</li>
+                            }
                             <li>@Html.ActionLink("LogOut", "Logout", new { area = "", controller = "Account" })</li>
                         }
                         else

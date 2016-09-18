@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Admin/Home";
+}
+
+<div class="row"></div>
+<div class="row">
+    <div class="col l3 hide-on-med-and-down pushpin">
+        <div class="moving-block">
+            <div class="row">
+                <div id="right-sidebar" class="card centralized z-depth-0">
+                    <p class="card-title flow-text white-text menu-par">Menu</p>
+                    <div class="collection with-header no-margin-top">
+                        @Html.RouteLink("Home", new { area="Admin", controller = "Admin", action = "Index" }, new { @class = "collection-item main-color-background active" })
+                        @Html.RouteLink("Manage tests", new { area="Admin", controller = "AdminTest", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("Manage users", new { area = "Admin", controller = "AdminUser", action = "Index" }, new { @class = "collection-item main-color-text" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l9 m12 s12 push-l3">
+        <div class="row">
+            <div class="col l11 m12 s12">
+                <div class="row">
+                    <p class="flow-text welcome-text centralized">Administration</p>
+                    <p class="flow-text sub-welcome-text centralized">Welcome to administration panel!</p>
+                    <hr class="colored-hr-thin" />
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <div class="collection unbordered">
+                            <a class="collection-item flow-text centralized black-text z-depth-0" href="/Admin/AdminTest/Index">
+                                <img width="600" class="responsive-img" src="~/Content/images/test-icon.png"/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <div class="collection unbordered">
+                            <a class="collection-item flow-text centralized black-text" href="/Admin/AdminUser/Index">
+                                <img width="600" class="responsive-img" src="~/Content/images/user-icon.png"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

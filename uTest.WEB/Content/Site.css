@@ -193,6 +193,10 @@ footer.page-footer {
     position: fixed;
 }
 
+.unbordered {
+    border: none;
+}
+
 #details-button {
     padding-top: 40px;
 }
