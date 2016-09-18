@@ -49,14 +49,26 @@ namespace uTest.DAL.EF
                         {
                             new Answer {Id = 7, Text = "Correct answer", IsCorrect = true}
                         }
-                    }
+                    },
+                    new Question
+                    {
+                        Id = 2,
+                        IsMultipleAnswers = false,
+                        Text = "Choose answer #3",
+                        Answers = new List<Answer>
+                        {
+                            new Answer {Id = 4, Text = "Answer #1", IsCorrect = false},
+                            new Answer {Id = 5, Text = "Answer #2", IsCorrect = false},
+                            new Answer {Id = 6, Text = "Answer #3", IsCorrect = true}
+                        }
+                    },
                 }
             });
 
             db.Tests.Add(new Test
             {
                 Id = 2,
-                IsPrivate = true,
+                IsPrivate = false,
                 Name = "Test #2",
                 Description = null,
                 Questions = new List<Question>

@@ -184,3 +184,7 @@ footer.page-footer {
     width: 18%;
     position: fixed;
 }
+
+#details-button {
+    padding-top: 40px;
+}

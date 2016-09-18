@@ -11,6 +11,8 @@ namespace uTest.BLL.Services
                 throw new ValidationException("Cannot create test from null", "");
             if (string.IsNullOrEmpty(testDto.Name))
                 throw new ValidationException("This property cannot be empty", "Name");
+            if (testDto.Questions == null || testDto.Questions.Count == 0)
+                throw new ValidationException("Test must contain at least one question", "");
         }
 
         public static void ValidateQuestionModel(QuestionDTO questionDto)
@@ -18,7 +20,9 @@ namespace uTest.BLL.Services
             if (questionDto == null)
                 throw new ValidationException("Cannot create question from null", "");
             if (questionDto.Text == null)
-                throw new ValidationException("This property cannot be null", "Text");           
+                throw new ValidationException("This property cannot be null", "Text");
+            if (questionDto.Answers == null || questionDto.Answers.Count == 0)
+                throw new ValidationException("Questtion must contain at least one answer", "");
         }
 
         public static void ValidateAnswerModel(AnswerDTO answerDto)

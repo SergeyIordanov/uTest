@@ -188,6 +188,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Checkboxes.cs" />
+    <Compile Include="Helpers\RadioButtons.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -290,6 +292,8 @@
     <Content Include="Views\Account\Partials\_RegisterForm.cshtml" />
     <None Include="Views\Task\Index.cshtml" />
     <None Include="Views\Test\Public.cshtml" />
+    <Content Include="Views\Test\Details.cshtml" />
+    <Content Include="Views\Test\SolveTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
