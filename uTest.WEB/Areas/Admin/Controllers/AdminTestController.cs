@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -123,6 +124,11 @@ namespace uTest.WEB.Areas.Admin.Controllers
                 {
                     throw new ValidationException("File is required", "");
                 }               
+            }
+            catch (IOException ex)
+            {
+                ModelState.AddModelError("Cannot save your file. Details: " + ex.Message, "");
+                return View();
             }
             catch (ValidationException ex)
             {

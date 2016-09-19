@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using uTest.BLL.DTO;
 using uTest.BLL.Infrastructure;
 using uTest.BLL.Interfaces;
 using uTest.DAL.Interfaces;
 using uTest.Entities.General;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace uTest.BLL.Services
 {
@@ -69,7 +71,84 @@ namespace uTest.BLL.Services
 
         public void CreateTestFromDoc(string path)
         {
-            throw new ValidationException("Test creation failed", "");
+            Word.Application app = null;
+            Word.Document doc = null;
+            object nullobj = System.Reflection.Missing.Value;
+            try
+            {
+                var testDTO = new TestDTO {Questions = new List<QuestionDTO>() };
+
+                app = new Word.Application();             
+                object file = path;
+                doc = app.Documents.Open(
+                    ref file, ref nullobj, ref nullobj,
+                    ref nullobj, ref nullobj, ref nullobj,
+                    ref nullobj, ref nullobj, ref nullobj,
+                    ref nullobj, ref nullobj, ref nullobj,
+                    ref nullobj, ref nullobj, ref nullobj);
+
+                Word.Table testTable = doc.Tables[1];
+
+                if (testTable.Rows[1].Cells.Count == 1)
+                {
+                    testDTO.Name = testTable.Cell(1, 1).Range.Text.Replace("\r\a", string.Empty);
+                }
+                else
+                    throw new ValidationException("Wrong doc structure", "");
+                if (testTable.Rows[2].Cells.Count == 1)
+                {
+                    testDTO.Description = testTable.Cell(2, 1).Range.Text.Replace("\r\a", string.Empty);
+                }
+                else
+                    throw new ValidationException("Wrong doc structure", "");
+
+                var questionsPos = new Dictionary<int, string>();
+                for (int i = 3; i < testTable.Rows.Count; i++)
+                {
+                    if (testTable.Rows[i].Cells.Count == 1 && testTable.Rows[i + 1].Cells.Count == 1)
+                        questionsPos.Add(i + 1, testTable.Cell(i + 1, 1).Range.Text.Replace("\r\a", string.Empty));
+                }
+                foreach (KeyValuePair<int, string> pair in questionsPos)
+                {
+                    int correctsCount = 0;
+                    var question = new QuestionDTO {Text = pair.Value, Answers = new List<AnswerDTO>()};
+                    for (int i = pair.Key+1; i <= testTable.Rows.Count; i++)
+                    {
+                        if (testTable.Rows[i].Cells.Count == 1)
+                            break;
+                        string text = testTable.Cell(i, 2).Range.Text.Replace("\r\a", string.Empty);
+                        string correct = testTable.Cell(i, 1).Range.Text.Replace("\r\a", string.Empty);
+                        var answer = new AnswerDTO
+                        {
+                            Text = text,
+                            IsCorrect = correct.Equals("+")
+                        };
+                        if (answer.IsCorrect)
+                            correctsCount++;
+                        question.Answers.Add(answer);
+                    }
+                    if (correctsCount > 1)
+                        question.IsMultipleAnswers = true;
+                    testDTO.Questions.Add(question);
+                }
+                // Using ValidationException for transfer validation data to presentation layer
+                Validator.ValidateTestModel(testDTO);
+                // Mapping DTO object into DB entity
+                var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
+                var test = mapper.Map<Test>(testDTO);
+                // Creating and saving
+                Database.Tests.Create(test);
+                Database.Save();
+            }
+            catch (Exception ex)
+            {
+                throw new ValidationException("Document parsing failed. Details: " + ex.Message, "");
+            }
+            finally
+            {
+                doc?.Close(ref nullobj, ref nullobj, ref nullobj);
+                app?.Quit(ref nullobj, ref nullobj, ref nullobj);
+            }
         }
 
         public void CreateQuestion(QuestionDTO questionDTO, long testId)
