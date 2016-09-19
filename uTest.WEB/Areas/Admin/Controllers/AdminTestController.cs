@@ -182,5 +182,13 @@ namespace uTest.WEB.Areas.Admin.Controllers
             var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();
             return PartialView("Partials/_TestsList", mapper.Map<IEnumerable<TestViewModel>>(_testService.GetTests()));
         }
+
+        public FileResult GetTemplate()
+        {
+            string filePath = Server.MapPath("~/App_Data/Templates/TemplateForTests.docx");
+            string file_type = "application/docx";
+            string file_name = "TemplateForTests.docx";
+            return File(filePath, file_type, file_name);
+        }
     }
 }
