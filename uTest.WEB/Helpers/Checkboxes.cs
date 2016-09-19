@@ -12,7 +12,7 @@ namespace uTest.WEB.Helpers
         /// <param name="html">Extention base</param>
         /// <param name="id">Unique id (each checkbox will have id='[id]-[iterable number]')</param>
         /// <param name="propName">Name of the array you want to map checkbox list</param>
-        /// <param name="textValues">Display values & text of each checkbox. Key is text, value is value</param>
+        /// <param name="textValues">Display values & text of each checkbox. Key is value, value is text</param>
         /// <param name="htmlAttributes">Object with deffs of html attributes</param>
         /// <returns>Html markup</returns>
         public static MvcHtmlString CreateCheckboxesList(this HtmlHelper html, string id, string propName, IDictionary<string, string> textValues, object htmlAttributes = null)
@@ -30,12 +30,12 @@ namespace uTest.WEB.Helpers
                 checkbox.Attributes.Add(new KeyValuePair<string, string>("id", id + "-" + currentIndex));
                 checkbox.Attributes.Add(new KeyValuePair<string, string>("name", propName));
                 checkbox.Attributes.Add(new KeyValuePair<string, string>("type", "checkbox"));
-                checkbox.Attributes.Add(new KeyValuePair<string, string>("value", item.Value));
+                checkbox.Attributes.Add(new KeyValuePair<string, string>("value", item.Key));
                 par.InnerHtml += checkbox.ToString();
 
                 var label = new TagBuilder("label");
                 label.Attributes.Add(new KeyValuePair<string, string>("for", id + "-" + currentIndex));
-                label.InnerHtml = item.Key;
+                label.InnerHtml = item.Value;
                 par.InnerHtml += label.ToString();
 
                 container.InnerHtml += par.ToString();

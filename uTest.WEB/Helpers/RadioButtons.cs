@@ -30,12 +30,12 @@ namespace uTest.WEB.Helpers
                 checkbox.Attributes.Add(new KeyValuePair<string, string>("id", id + "-" + currentIndex));
                 checkbox.Attributes.Add(new KeyValuePair<string, string>("name", propName));
                 checkbox.Attributes.Add(new KeyValuePair<string, string>("type", "radio"));
-                checkbox.Attributes.Add(new KeyValuePair<string, string>("value", item.Value));
+                checkbox.Attributes.Add(new KeyValuePair<string, string>("value", item.Key));
                 par.InnerHtml += checkbox.ToString();
 
                 var label = new TagBuilder("label");
                 label.Attributes.Add(new KeyValuePair<string, string>("for", id + "-" + currentIndex));
-                label.InnerHtml = item.Key;
+                label.InnerHtml = item.Value;
                 par.InnerHtml += label.ToString();
 
                 container.InnerHtml += par.ToString();

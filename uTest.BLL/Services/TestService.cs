@@ -140,9 +140,13 @@ namespace uTest.BLL.Services
                 Database.Tests.Create(test);
                 Database.Save();
             }
-            catch (Exception ex)
+            catch (ValidationException ex)
             {
-                throw new ValidationException("Document parsing failed. Details: " + ex.Message, "");
+                throw new ValidationException("Document parsing failed. Details: " + ex.Message + ". " + ex.Property, "");
+            }
+            catch (Exception)
+            {
+                throw new ValidationException("Document parsing failed. Invalid structure", "");
             }
             finally
             {

@@ -49,19 +49,12 @@
                                          var textValues = new Dictionary<string, string>();
                                          foreach (var answer in question.Answers)
                                          {
-                                             textValues.Add(answer.Text, answer.Id.ToString());
+                                             textValues.Add(answer.Id.ToString(), answer.Text);
                                          }
                                          string id = "question-" + ViewBag.QuestionNum + "-answer";
                                          string propForRadio = "radio" + ViewBag.QuestionNum;
                                      }
-                                     @if (question.IsMultipleAnswers)
-                                     {
-                                         @Html.CreateCheckboxesList(id, "answers", textValues)
-                                     }
-                                     else
-                                     {
-                                         @Html.CreateRadioList(id, propForRadio, textValues)
-                                     }
+                                     @(question.IsMultipleAnswers ? Html.CreateCheckboxesList(id, "answers", textValues) : Html.CreateRadioList(id, propForRadio, textValues))
                                  </div>
                                  ViewBag.QuestionNum++;
                              }

@@ -26,11 +26,20 @@
                     <hr class="colored-hr-thin" />
                 </div>
                 <div class="row">
-                    @using (Html.BeginForm("CreateFromDoc", "AdminTest", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    <p class="flow-text sub-welcome-text centralized">Here you can create test from Microsoft Word document. Please, download a template for creating valid documents</p>
+                    <div class="row no-margin-top">
+                        <div class="col s5">
+                            <i class="material-icons right">file_download</i>
+                        </div>
+                        <div class="col s7">
+                            <a href="/Admin/AdminTest/GetTemplate" class="flow-text sub-welcome-text sublined-text-on-hover">Download template</a>
+                        </div>                       
+                    </div>
+                    @using (Html.BeginForm("CreateFromDoc", "AdminTest", FormMethod.Post, new {enctype = "multipart/form-data"}))
                     {
                         @Html.AntiForgeryToken()
                         <div class="col s12">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger centralized" })
+                            @Html.ValidationSummary(true, "", new {@class = "text-danger centralized"})
                             <div class="file-field input-field ">
                                 <div class="col s10 push-s1 centralized btn main-color-background">
                                     <span>Upload doc</span>
@@ -38,12 +47,12 @@
                                 </div>
                                 <div class="col s12 file-path-wrapper">
                                     <input class="file-path validate" placeholder="Uploaded file" type="text" required>
-                                </div>                                
+                                </div>
                             </div>
                             <div class="row no-margin-bot"></div>
                             <p class="flow-text sub-welcome-text centralized">Available extensions: .docx .doc</p>
                             <div class="col s12 centralized">
-                                <input type="submit" value="Create" class="btn btn-default main-color-background" />
+                                <input type="submit" value="Create" class="btn btn-default main-color-background"/>
                             </div>
                         </div>
                     }
