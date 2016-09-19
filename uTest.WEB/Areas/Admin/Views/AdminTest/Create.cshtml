@@ -1,7 +1,39 @@
-﻿
-@{
-    ViewBag.Title = "Create";
+﻿@{
+    ViewBag.Title = "Admin/Tests/Create";
 }
 
-<h2>Create</h2>
+<div class="row"></div>
+<div class="row">
+    <div class="col l3 hide-on-med-and-down pushpin">
+        <div class="moving-block">
+            <div class="row">
+                <div id="right-sidebar" class="card centralized z-depth-0">
+                    <p class="card-title flow-text white-text menu-par">Menu</p>
+                    <div class="collection with-header no-margin-top">
+                        @Html.RouteLink("Home", new {area = "Admin", controller = "Admin", action = "Index"}, new {@class = "collection-item main-color-text"})
+                        @Html.RouteLink("Manage tests", new {area = "Admin", controller = "AdminTest", action = "Index"}, new {@class = "collection-item main-color-text"})
+                        @Html.RouteLink("Manage users", new {area = "Admin", controller = "AdminUser", action = "Index"}, new {@class = "collection-item main-color-text"})
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l9 m12 s12 push-l3">
+        <div class="row">
+            <div class="col l11 m12 s12">
+                <div class="row">
+                    <p class="flow-text welcome-text centralized">New test</p>
+                    <hr class="colored-hr-thin"/>
+                </div>
+                <div class="row">
+                    @Html.Partial("Partials/_TestForm")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="scripts">
+    @Scripts.Render("~/bundles/testCreator")
+</section>
 

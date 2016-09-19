@@ -67,6 +67,11 @@ namespace uTest.BLL.Services
             Database.Save();
         }
 
+        public void CreateTestFromDoc(string path)
+        {
+            throw new ValidationException("Test creation failed", "");
+        }
+
         public void CreateQuestion(QuestionDTO questionDTO, long testId)
         {
             // Using ValidationException for transfer validation data to presentation layer

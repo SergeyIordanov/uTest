@@ -1,0 +1,72 @@
+﻿@model uTest.WEB.ViewModels.TestViewModel
+
+@using (Html.BeginForm("Create", "AdminTest", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">          
+            <div class="col s12">
+                <div class="input-field col s12">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12">
+                    @Html.LabelFor(model => model.Description)
+                    <textarea class="materialize-textarea" cols="20" name="Description" required="required" rows="2"></textarea>
+                    @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+                </div>
+                <div class="input-field col s12 no-margin-top">
+                    <p>
+                        <input type="checkbox" id="isPrivate" name="IsPrivate" />
+                        <label for="isPrivate">Create private</label>
+                    </p>
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <hr class="colored-hr-thin" />
+        <div id="question_1" class="row no-margin-bot">
+            <div id="inner-wrapper-question_1" class="col s12">
+                <p class="flow-text avarage-text centralized">Question #1</p>
+                <div class="input-field col s12">
+                    <label>Question</label>
+                    <input type="text" name="question_1" required/>
+                </div>
+                <div id="answer_1_1" class="row">
+                    <div class="input-field col s6">
+                        <label>Answer #1</label>
+                        <input type="text" name="answer_1_1" required/>
+                    </div>
+                    <div class="input-field col s3">
+                        <p>
+                            <input type="checkbox" id="correct_1_1" name="correct" value="1_1"/>
+                            <label for="correct_1_1"><span class="hide-on-small-and-down">is correct</span></label>
+                        </p>
+                    </div>                   
+                </div>
+                <div id="addAnswerWrapper_1" class="input-field col s12 no-margin-top">
+                    <p class="flow-text sub-welcome-text blue-text active-par" onclick="addAnswer(1, 2)">+ add answer</p>
+                </div>
+            </div>                     
+        </div>
+        <div id="addQuestionWrapper" class="col s12">
+            <p class="flow-text avarage-text blue-text active-par" onclick="addQuestion(2)">+ add question</p>
+        </div>
+        
+        <div class="row"></div>
+        <div class="row">
+            <div class="col s12 m2 push-m3 centralized">
+                <input type="submit" value="Create" id="btn-create-test" class="btn btn-default main-color-background centralized"/>
+            </div>
+            <div class="col s12 m2 push-m4 centralized">
+                <a class="btn btn-default main-color-background" href="/Admin/AdminTest/Index">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+}
+

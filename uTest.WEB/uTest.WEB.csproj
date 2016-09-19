@@ -207,6 +207,14 @@
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AuthDB.mdf" />
+    <Content Include="App_Data\AuthDB_log.ldf">
+      <DependentUpon>AuthDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\TestContext.mdf" />
+    <Content Include="App_Data\TestContext_log.ldf">
+      <DependentUpon>TestContext.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\avatar.jpg" />
@@ -279,6 +287,8 @@
     <Content Include="Areas\Admin\Views\AdminTest\Partials\_TestsList.cshtml" />
     <Content Include="Areas\Admin\Views\AdminTest\Create.cshtml" />
     <Content Include="Areas\Admin\Views\AdminTest\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminTest\CreateFromDoc.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminTest\Partials\_TestForm.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -302,6 +312,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\testCreator.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -327,7 +338,7 @@
     <Content Include="Views\Test\TestResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Docs\" />
     <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
   <ItemGroup>

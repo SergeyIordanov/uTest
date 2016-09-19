@@ -197,10 +197,26 @@ footer.page-footer {
     border: none;
 }
 
+.active-par {
+    cursor: pointer;
+}
+
+.remove-answer {
+    margin-top: 25px;
+}
+
+.remove-question {
+    margin-left: 15px;
+}
+
 #details-button {
     padding-top: 40px;
 }
 
 #btn-home {
+    margin-bottom: 15px;
+}
+
+#btn-create-test {
     margin-bottom: 15px;
 }

@@ -21,6 +21,9 @@ namespace uTest.WEB
             bundles.Add(new ScriptBundle("~/bundles/init").Include(
                         "~/Scripts/initialization.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/testCreator").Include(
+                        "~/Scripts/testCreator.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/site.css"));
 

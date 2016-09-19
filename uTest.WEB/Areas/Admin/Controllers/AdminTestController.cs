@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using uTest.BLL.DTO;
 using uTest.BLL.Infrastructure;
@@ -39,8 +40,47 @@ namespace uTest.WEB.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TestViewModel testView)
+        public ActionResult Create(TestViewModel testView, string[] correct)
         {
+            int i = 1;
+            if(correct == null)
+                correct = new string[0];
+            var questions = new List<QuestionViewModel>();
+            while (true)
+            {
+                var questionText = Request.Form["question_" + i];
+                if (questionText != null)
+                {
+                    var answers = new List<AnswerViewModel>();
+                    int j = 1;
+                    int correctCount = 0;
+                    while (true)
+                    {
+                        var answerText = Request.Form["answer_" + i + "_" + j];
+                        if (answerText != null)
+                        {
+                            var answer = new AnswerViewModel {Text = answerText};                            
+                            foreach (string cor in correct)
+                            {
+                                if ((i + "_" + j).Equals(cor))
+                                {
+                                    answer.IsCorrect = true;
+                                    correctCount++;
+                                }
+                            }
+                            answers.Add(answer);
+                            j++;
+                        }
+                        else
+                            break;
+                    }
+                    questions.Add(new QuestionViewModel {Text = questionText, Answers = answers, IsMultipleAnswers = correctCount > 1});
+                    i++;
+                }
+                else 
+                    break;
+            }
+            testView.Questions = questions;
             try
             {
                 var mapper = MapperConfig.GetConfigFromViewModelToDTO().CreateMapper();
@@ -50,6 +90,44 @@ namespace uTest.WEB.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(ex.Property, ex.Message);
                 return View(testView);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult CreateFromDoc()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateFromDoc(HttpPostedFileBase uploadFile)
+        {
+            try
+            {
+                if (uploadFile != null)
+                {
+                    //validate file format
+                    string[] fileNameArr = uploadFile.FileName.Split('.');
+                    string path;
+                    if (fileNameArr[fileNameArr.Length - 1].Equals("doc"))
+                        path = Server.MapPath("~/App_Data/Docs/Doc.doc");
+                    else if(fileNameArr[fileNameArr.Length - 1].Equals("docx"))
+                        path = Server.MapPath("~/App_Data/Docs/Doc.docx");
+                    else
+                        throw new ValidationException("Wrong file format", "");
+                    uploadFile.SaveAs(path);
+                    _testService.CreateTestFromDoc(path);
+                }
+                else
+                {
+                    throw new ValidationException("File is required", "");
+                }               
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+                return View();
             }
             return RedirectToAction("Index");
         }

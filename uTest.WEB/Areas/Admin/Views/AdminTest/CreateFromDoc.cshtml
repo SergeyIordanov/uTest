@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Admin/Tests/CreateFromDoc";
+}
+
+<div class="row"></div>
+<div class="row">
+    <div class="col l3 hide-on-med-and-down pushpin">
+        <div class="moving-block">
+            <div class="row">
+                <div id="right-sidebar" class="card centralized z-depth-0">
+                    <p class="card-title flow-text white-text menu-par">Menu</p>
+                    <div class="collection with-header no-margin-top">
+                        @Html.RouteLink("Home", new { area = "Admin", controller = "Admin", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("Manage tests", new { area = "Admin", controller = "AdminTest", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("Manage users", new { area = "Admin", controller = "AdminUser", action = "Index" }, new { @class = "collection-item main-color-text" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l9 m12 s12 push-l3">
+        <div class="row">
+            <div class="col l11 m12 s12">
+                <div class="row">
+                    <p class="flow-text welcome-text centralized">New test</p>
+                    <hr class="colored-hr-thin" />
+                </div>
+                <div class="row">
+                    @using (Html.BeginForm("CreateFromDoc", "AdminTest", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="col s12">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger centralized" })
+                            <div class="file-field input-field ">
+                                <div class="col s10 push-s1 centralized btn main-color-background">
+                                    <span>Upload doc</span>
+                                    <input type="file" name="uploadFile" accept=".docx,.doc">
+                                </div>
+                                <div class="col s12 file-path-wrapper">
+                                    <input class="file-path validate" placeholder="Uploaded file" type="text" required>
+                                </div>                                
+                            </div>
+                            <div class="row no-margin-bot"></div>
+                            <p class="flow-text sub-welcome-text centralized">Available extensions: .docx .doc</p>
+                            <div class="col s12 centralized">
+                                <input type="submit" value="Create" class="btn btn-default main-color-background" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

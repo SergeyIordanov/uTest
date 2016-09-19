@@ -37,7 +37,16 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col s10 push-s1">
+                        <div class="card">
+                            <div class="collection no-margin-vert centralized  z-depth-bordered">
+                                @Html.RouteLink("+ NEW TEST FROM DOC", new { area = "Admin", controller = "AdminTest", action = "CreateFromDoc" },
+                                new { @class = "collection-item main-color-text" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="tests_target" class="row">
                     @Html.Partial("Partials/_TestsList", Model)
                 </div>
