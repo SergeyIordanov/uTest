@@ -1,4 +1,5 @@
-﻿using uTest.BLL.DTO;
+﻿using System.Linq;
+using uTest.BLL.DTO;
 using uTest.BLL.Infrastructure;
 
 namespace uTest.BLL.Services
@@ -13,6 +14,8 @@ namespace uTest.BLL.Services
                 throw new ValidationException("This property cannot be empty", "Name");
             if (testDto.Questions == null || testDto.Questions.Count == 0)
                 throw new ValidationException("Test must contain at least one question", "");
+            if (testDto.Questions.Any(question => question.Answers == null || question.Answers.Count == 0))
+                throw new ValidationException("Each question must contain at least one answer", "");
         }
 
         public static void ValidateQuestionModel(QuestionDTO questionDto)
