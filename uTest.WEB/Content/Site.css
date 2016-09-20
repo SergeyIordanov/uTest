@@ -209,6 +209,17 @@ footer.page-footer {
     margin-left: 15px;
 }
 
+.image-wrapper {
+    padding-top: 1px !important;
+    padding-left: 1px !important;
+    padding-right: 1px !important;
+    padding-bottom: 0 !important;
+}
+
+.image-wrapper:hover {
+    background-color: #F2C473 !important;
+}
+
 #details-button {
     padding-top: 40px;
 }

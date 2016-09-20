@@ -220,6 +220,7 @@
     <Content Include="Content\images\avatar.jpg" />
     <Content Include="Content\images\gamepad-new.png" />
     <Content Include="Content\images\gamepad.png" />
+    <Content Include="Content\images\test-icon-new.png" />
     <Content Include="Content\images\test-icon.png" />
     <Content Include="Content\images\user-icon.png" />
     <Content Include="Content\materialize\css\materialize.css" />
