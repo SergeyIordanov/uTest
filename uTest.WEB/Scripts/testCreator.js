@@ -76,3 +76,10 @@ function removeAnswer(question, answer) {
     }
     $("#answer_" + question + "_" + answer).remove();
 }
+
+function onShowAllChanged() {
+    if ($("#showAll").prop("checked"))
+        $("#questionsToShow").attr("disabled", "disabled");
+    else
+        $("#questionsToShow").removeAttr("disabled");
+}

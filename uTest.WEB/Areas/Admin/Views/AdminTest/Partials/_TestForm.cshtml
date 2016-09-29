@@ -20,10 +20,21 @@
                 </div>
                 <div class="input-field col s12 no-margin-top">
                     <p>
-                        <input type="checkbox" id="isPrivate" name="IsPrivate" />
+                        <input type="checkbox" id="isPrivate" name="IsPrivate"/>
                         <label for="isPrivate">Create private</label>
                     </p>
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+                </div>
+                <div class="input-field col s12 m6 l6 no-margin-top">
+                    <p>
+                        <input type="checkbox" id="showAll" name="showAll" checked onchange="onShowAllChanged()"/>
+                        <label for="showAll">Show all questions</label>
+                    </p>
+                </div>
+                <div class="input-field col s12 m6 l6">
+                    <input type="number" id="questionsToShow" name="QuestionsToSolve" min="0" value="0" disabled/>
+                    <label for="questionsToShow">Questions to show:</label>
+                    @Html.ValidationMessageFor(model => model.QuestionsToSolve, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
