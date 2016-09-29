@@ -101,9 +101,29 @@ namespace uTest.BLL.Services
                 }
                 else
                     throw new ValidationException("Wrong doc structure", "");
-
+                if (testTable.Rows[3].Cells.Count == 1)
+                {
+                    string val = testTable.Cell(3, 1).Range.Text.Replace("\r\a", string.Empty);
+                    if (string.IsNullOrEmpty(val) || val.Trim().Equals("max"))
+                        testDTO.QuestionsToSolve = -1;
+                    else
+                    {
+                        int toSolve;
+                        try
+                        {
+                            toSolve = Convert.ToInt32(val);
+                        }
+                        catch (Exception)
+                        {
+                            throw new ValidationException("Wrong doc structure", "");
+                        }
+                        testDTO.QuestionsToSolve = toSolve;
+                    }
+                }
+                else
+                    throw new ValidationException("Wrong doc structure", "");
                 var questionsPos = new Dictionary<int, string>();
-                for (int i = 3; i < testTable.Rows.Count; i++)
+                for (int i = 4; i < testTable.Rows.Count; i++)
                 {
                     if (testTable.Rows[i].Cells.Count == 1 && testTable.Rows[i + 1].Cells.Count == 1)
                         questionsPos.Add(i + 1, testTable.Cell(i + 1, 1).Range.Text.Replace("\r\a", string.Empty));
@@ -131,7 +151,8 @@ namespace uTest.BLL.Services
                         question.IsMultipleAnswers = true;                    
                     testDTO.Questions.Add(question);
                 }
-                testDTO.QuestionsToSolve = testDTO.Questions.Count;
+                if (testDTO.QuestionsToSolve == -1)
+                    testDTO.QuestionsToSolve = testDTO.Questions.Count;
                 // Using ValidationException for transfer validation data to presentation layer
                 Validator.ValidateTestModel(testDTO);
                 // Mapping DTO object into DB entity

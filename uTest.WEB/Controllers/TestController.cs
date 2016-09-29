@@ -60,22 +60,25 @@ namespace uTest.WEB.Controllers
             try
             {
                 test = _testService.GetTest(id);
-                var questionsToShow = new QuestionDTO[test.QuestionsToSolve];
-
-                int k;
-                for (int i = 0; i < questionsToShow.Length; i++)
+                if (test.QuestionsToSolve != test.Questions.Count)
                 {
-                    while (true)
+                    var questionsToShow = new QuestionDTO[test.QuestionsToSolve];
+
+                    int k;
+                    for (int i = 0; i < questionsToShow.Length; i++)
                     {
-                        k = rand.Next(test.Questions.Count);
-                        if (!questionsToShow.Any(x => x != null && x.Id.Equals(test.Questions.ElementAt(k).Id)))
+                        while (true)
                         {
-                            questionsToShow[i] = test.Questions.ElementAt(k);
-                            break;
+                            k = rand.Next(test.Questions.Count);
+                            if (!questionsToShow.Any(x => x != null && x.Id.Equals(test.Questions.ElementAt(k).Id)))
+                            {
+                                questionsToShow[i] = test.Questions.ElementAt(k);
+                                break;
+                            }
                         }
                     }
+                    test.Questions = questionsToShow.ToList();
                 }
-                test.Questions = questionsToShow.ToList();
             }
             catch (ValidationException ex)
             {
