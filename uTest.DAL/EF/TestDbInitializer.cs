@@ -14,6 +14,7 @@ namespace uTest.DAL.EF
                 IsPrivate = false,
                 Name = "Test #1",
                 Description = "Some text. Some text.\nSome text. Some text",
+                QuestionsToSolve = 2,
                 Questions = new List<Question>
                 {
                     new Question
@@ -59,6 +60,7 @@ namespace uTest.DAL.EF
                 IsPrivate = false,
                 Name = "Test #2",
                 Description = null,
+                QuestionsToSolve = 2,
                 Questions = new List<Question>
                 {
                     new Question

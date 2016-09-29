@@ -82,6 +82,7 @@ namespace uTest.WEB.Areas.Admin.Controllers
                     break;
             }
             testView.Questions = questions;
+            testView.QuestionsToSolve = testView.Questions.Count;
             try
             {
                 var mapper = MapperConfig.GetConfigFromViewModelToDTO().CreateMapper();

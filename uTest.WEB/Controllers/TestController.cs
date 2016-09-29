@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -53,16 +54,33 @@ namespace uTest.WEB.Controllers
 
         [HttpGet]
         public ActionResult SolveTest(long id)
-        {
+        {            
             TestDTO test;
+            var rand = new Random();
             try
             {
                 test = _testService.GetTest(id);
+                var questionsToShow = new QuestionDTO[test.QuestionsToSolve];
+
+                int k;
+                for (int i = 0; i < questionsToShow.Length; i++)
+                {
+                    while (true)
+                    {
+                        k = rand.Next(test.Questions.Count);
+                        if (!questionsToShow.Any(x => x != null && x.Id.Equals(test.Questions.ElementAt(k).Id)))
+                        {
+                            questionsToShow[i] = test.Questions.ElementAt(k);
+                            break;
+                        }
+                    }
+                }
+                test.Questions = questionsToShow.ToList();
             }
             catch (ValidationException ex)
             {
                 return View("Error", ex);
-            }
+            }            
             var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();
             return View(mapper.Map<TestViewModel>(test));
         }
@@ -101,8 +119,8 @@ namespace uTest.WEB.Controllers
                     rightQuestions++;
             }
 
-            int questionPrice = 100 / test.Questions.Count;
-            int failedQuestions = test.Questions.Count - rightQuestions;
+            int questionPrice = 100 / test.QuestionsToSolve;
+            int failedQuestions = test.QuestionsToSolve - rightQuestions;
             int res = 100 - failedQuestions * questionPrice;
 
             var mapper = MapperConfig.GetConfigToViewModel().CreateMapper();

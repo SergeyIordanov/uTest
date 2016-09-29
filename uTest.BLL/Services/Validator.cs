@@ -16,6 +16,8 @@ namespace uTest.BLL.Services
                 throw new ValidationException("Test must contain at least one question", "");
             if (testDto.Questions.Any(question => question.Answers == null || question.Answers.Count == 0))
                 throw new ValidationException("Each question must contain at least one answer", "");
+            if (testDto.QuestionsToSolve > testDto.Questions.Count)
+                throw new ValidationException("It cannot be more questions to solve then questions at all", "QuestionsToSolve");
         }
 
         public static void ValidateQuestionModel(QuestionDTO questionDto)

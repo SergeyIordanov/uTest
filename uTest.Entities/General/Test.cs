@@ -15,6 +15,8 @@ namespace uTest.Entities.General
         [Required]
         public bool IsPrivate { get; set; }
 
+        public int QuestionsToSolve { get; set; }
+
         public virtual ICollection<Question> Questions { get; set; }
 
         public virtual ICollection<SolvedTest> SolvedTests { get; set; }

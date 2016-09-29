@@ -128,9 +128,10 @@ namespace uTest.BLL.Services
                         question.Answers.Add(answer);
                     }
                     if (correctsCount > 1)
-                        question.IsMultipleAnswers = true;
+                        question.IsMultipleAnswers = true;                    
                     testDTO.Questions.Add(question);
                 }
+                testDTO.QuestionsToSolve = testDTO.Questions.Count;
                 // Using ValidationException for transfer validation data to presentation layer
                 Validator.ValidateTestModel(testDTO);
                 // Mapping DTO object into DB entity

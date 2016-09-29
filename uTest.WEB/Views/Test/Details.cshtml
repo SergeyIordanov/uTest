@@ -40,7 +40,7 @@
                     <p class="flow-text sub-welcome-text">------------------</p>
                     @if (Model.Questions != null)
                     {
-                        <p class="flow-text sub-welcome-text">Questions: @Model.Questions.Count</p>
+                        <p class="flow-text sub-welcome-text">Questions: @Model.QuestionsToSolve / @Model.Questions.Count</p>
                     }
                     else
                     {

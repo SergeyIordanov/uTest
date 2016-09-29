@@ -15,6 +15,8 @@ namespace uTest.WEB.ViewModels
         [Required]
         public bool IsPrivate { get; set; }
 
+        public int QuestionsToSolve { get; set; }
+
         public virtual ICollection<QuestionViewModel> Questions { get; set; }
 
         public List<SolvedTestViewModel> SolvedTests { get; set; }
