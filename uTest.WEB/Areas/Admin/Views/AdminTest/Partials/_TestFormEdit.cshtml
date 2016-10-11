@@ -1,0 +1,149 @@
+﻿@model uTest.WEB.ViewModels.TestViewModel
+
+@using (Html.BeginForm("Edit", "AdminTest", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="col s12">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Id)
+        <div class="row">
+            <div class="col s12">
+                <div class="input-field col s12">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12">
+                    @Html.LabelFor(model => model.Description)
+                    <textarea class="materialize-textarea" cols="20" name="Description" required="required" rows="2">@Model.Description</textarea>
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12 no-margin-top">
+                    <p>
+                        @if (Model.IsPrivate)
+                        {
+                            <input type="checkbox" id="isPrivate" name="IsPrivate" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="isPrivate" name="IsPrivate" />
+                        }                       
+                        <label for="isPrivate">Create private</label>
+                    </p>
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+                <div class="input-field col s12 m6 l6 no-margin-top">
+                    <p>
+                        @if (Model.QuestionsToSolve < Model.Questions.Count)
+                        {
+                            <input type="checkbox" id="showAll" name="showAll" onchange="onShowAllChanged()" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="showAll" name="showAll" checked onchange="onShowAllChanged()" />
+                        }                          
+                        <label for="showAll">Show all questions</label>
+                    </p>
+                </div>
+                <div class="input-field col s12 m6 l6">
+                    @if (Model.QuestionsToSolve < Model.Questions.Count)
+                    {
+                        <input type="number" id="questionsToShow" name="QuestionsToSolve" min="0" value="@Model.QuestionsToSolve" />
+                    }
+                    else
+                    {
+                        <input type="number" id="questionsToShow" name="QuestionsToSolve" min="0" value="0" disabled />
+                    }
+                                       
+                    <label for="questionsToShow">Questions to show:</label>
+                    @Html.ValidationMessageFor(model => model.QuestionsToSolve, "", new {@class = "text-danger"})
+                </div>
+            </div>
+        </div>
+        <hr class="colored-hr-thin" />
+
+        @{
+            int questionNum = 1;
+            int answerNum;
+        }
+
+        @foreach (var question in Model.Questions)
+        {
+            answerNum = 1;
+
+            <div id="question_@questionNum" class="row no-margin-bot">
+                <div id="inner-wrapper-question_@questionNum" class="col s12">
+                    @if (Model.Questions.Count > 1 && question.Id == Model.Questions.ElementAt(Model.Questions.Count - 1).Id)
+                    {
+                        <p id='number-question_@questionNum' class='flow-text avarage-text centralized'>
+                            Question #@questionNum
+                            <span id='remove-question_@questionNum' class='active-par remove-question red-text' onclick='removeQuestion(@questionNum)'>
+                                <i class='material-icons'>clear</i>
+                            </span>
+                        </p>
+                    }
+                    else
+                    {
+                        <p  id='number-question_@questionNum' class="flow-text avarage-text centralized">Question #@questionNum</p>
+                    }                   
+                    <div id='input-question_@questionNum' class="input-field col s12">
+                        <label>Question</label>
+                        <input type="text" value="@question.Text" name="question_@questionNum" required/>
+                    </div>
+                    @foreach (var answer in question.Answers)
+                    {
+                        <div id="answer_@(questionNum + "_" + answerNum)" class="row">
+                            <div class="input-field col s6">
+                                <label>Answer #@answerNum</label>
+                                <input type="text" value="@answer.Text" name="answer_@(questionNum + "_" + answerNum)" required/>
+                            </div>
+                            <div id='wrapper-checkbox_@(questionNum + "_" + answerNum)' class="input-field col s3">
+                                <p>
+                                    @if (answer.IsCorrect)
+                                    {
+                                        <input type="checkbox" id="correct_@(questionNum + "_" + answerNum)" name="correct" value="@(questionNum + "_" + answerNum)" checked="checked"/>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="correct_@(questionNum + "_" + answerNum)" name="correct" value="@(questionNum + "_" + answerNum)"/>
+                                    }
+                                    <label for="correct_@(questionNum + "_" + answerNum)"><span class="hide-on-small-and-down">is correct</span></label>
+                                </p>
+                            </div>
+                            @if (question.Answers.Count > 1 && answer.Id == question.Answers.ElementAt(question.Answers.Count - 1).Id)
+                            {
+                                <div id='remove-answer_@(questionNum + "_" + answerNum)"' class='input-field col s3'>
+                                    <p class='active-par remove-answer red-text' onclick='removeAnswer(@questionNum, @answerNum)'>
+                                        <i class='material-icons'>clear</i>
+                                    </p>
+                                </div>
+                            }
+                        </div>
+                        answerNum++;
+                    }
+                    <div id="addAnswerWrapper_@questionNum" class="input-field col s12 no-margin-top">
+                        <p class="flow-text sub-welcome-text blue-text active-par" onclick="addAnswer(@questionNum, @answerNum)">+ add answer</p>
+                    </div>
+                </div>
+            </div>
+
+            questionNum++;
+        }
+        <div id="addQuestionWrapper" class="col s12">
+            <p class="flow-text avarage-text blue-text active-par" onclick="addQuestion(@questionNum)">+ add question</p>
+        </div>
+
+        <div class="row"></div>
+        <div class="row">
+            <div class="col s12 m2 push-m3 centralized">
+                <input type="submit" value="Submit" id="btn-create-test" class="btn btn-default main-color-background centralized" />
+            </div>
+            <div class="col s12 m2 push-m4 centralized">
+                <a class="btn btn-default main-color-background" href="/Admin/AdminTest/Index">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+}

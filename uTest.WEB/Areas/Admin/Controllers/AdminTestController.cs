@@ -156,10 +156,52 @@ namespace uTest.WEB.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TestViewModel testView)
+        public ActionResult Edit(TestViewModel testView, string[] correct)
         {
+            int i = 1;
+            if (correct == null)
+                correct = new string[0];
+            var questions = new List<QuestionViewModel>();
+            while (true)
+            {
+                var questionText = Request.Form["question_" + i];
+                if (questionText != null)
+                {
+                    var answers = new List<AnswerViewModel>();
+                    int j = 1;
+                    int correctCount = 0;
+                    while (true)
+                    {
+                        var answerText = Request.Form["answer_" + i + "_" + j];
+                        if (answerText != null)
+                        {
+                            var answer = new AnswerViewModel { Text = answerText };
+                            foreach (string cor in correct)
+                            {
+                                if ((i + "_" + j).Equals(cor))
+                                {
+                                    answer.IsCorrect = true;
+                                    correctCount++;
+                                }
+                            }
+                            answers.Add(answer);
+                            j++;
+                        }
+                        else
+                            break;
+                    }
+                    questions.Add(new QuestionViewModel { Text = questionText, Answers = answers, IsMultipleAnswers = correctCount > 1 });
+                    i++;
+                }
+                else
+                    break;
+            }
+            testView.Questions = questions;
+            if (Request.Form["showAll"] != null)
+                testView.QuestionsToSolve = testView.Questions.Count;
             try
-            {              
+            {
+                //_testService.DeleteTest(testView.Id);
                 var mapper = MapperConfig.GetConfigFromViewModelToDTO().CreateMapper();
                 _testService.UpdateTest(mapper.Map<TestDTO>(testView));
             }

@@ -290,6 +290,7 @@
     <Content Include="Areas\Admin\Views\AdminTest\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AdminTest\CreateFromDoc.cshtml" />
     <Content Include="Areas\Admin\Views\AdminTest\Partials\_TestForm.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminTest\Partials\_TestFormEdit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

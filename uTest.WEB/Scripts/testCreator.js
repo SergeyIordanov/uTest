@@ -23,15 +23,15 @@
 
 function addQuestion(question) {
     if (question > 2)
-        $("#remove-question_" + question).remove();
+        $("#remove-question_" + (question - 1)).remove();
     $("#addQuestionWrapper").remove();
     var selector = "#question_" + (question - 1);
     var html = "<div id='question_" + question + "' class='row no-margin-bot'>";
     html += "<div id='inner-wrapper-question_" + question + "' class='col s12'>";
-    html += "<p class='flow-text avarage-text centralized'>Question #" + question +
+    html += "<p id='number-question_" + question + "' class='flow-text avarage-text centralized'>Question #" + question +
         "<span id='remove-question_" + question + "'  class='active-par remove-question red-text'  onclick='removeQuestion(" + question + ")'>" +
         "<i class='material-icons'>clear</i></span></p>";
-    html += "<div class='input-field col s12'><label>Question</label>";
+    html += "<div id='input-question_" + question + "' class='input-field col s12'><label>Question</label>";
     html += "<input type='text' name='question_" + question + "' required/></div>";
     html += "<div id='answer_" + question + "_1' class='row'>";
     html += "<div class='input-field col s6'><label>Answer #1</label>";
@@ -55,9 +55,11 @@ function removeQuestion(question) {
     $("#question_" + (question - 1)).after(wrapper);
 
     if (question > 2) {
-        var delLabel = "<span id='remove-question_" + question + "'  class='active-par remove-question red-text'  onclick='removeQuestion(" + question + ")'>" +
-        "<i class='material-icons'>clear</i></span>";
-        $("#inner-wrapper-question_" + question).after(delLabel);
+        var delLabel = "<p id='number-question_" + (question - 1) + "' class='flow-text avarage-text centralized'>Question #" + (question - 1) +
+            "<span id='remove-question_" + (question - 1) + "'  class='active-par remove-question red-text'  onclick='removeQuestion(" + (question - 1) + ")'>" +
+            "<i class='material-icons'>clear</i></span></p>";
+        $("#number-question_" + (question - 1)).remove();
+        $("#input-question_" + (question - 1)).before(delLabel);
     }
     $("#question_" + question).remove();
 }

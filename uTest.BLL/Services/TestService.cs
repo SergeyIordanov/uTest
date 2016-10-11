@@ -232,14 +232,26 @@ namespace uTest.BLL.Services
         public void UpdateTest(TestDTO testDto)
         {
             // Using ValidationException for transfer validation data to presentation layer
-            if (Database.Tests.Get(testDto.Id) == null)
+            var oldTest = Database.Tests.Get(testDto.Id);
+            if (oldTest == null)
                 throw new ValidationException("Test wasn't found", "");
             Validator.ValidateTestModel(testDto);
             // Mapping DTO object into DB entity
             var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
             var test = mapper.Map<Test>(testDto);
-            // Updating & saving
+
+            var oldQuestionsIds = oldTest.Questions.Select(x => x.Id).ToList();
+            foreach (var id in oldQuestionsIds)
+            {
+                Database.Questions.Delete(id);
+            }
             Database.Tests.Update(test);
+            Database.Save();
+            foreach (var question in test.Questions)
+            {
+                question.Test = Database.Tests.Get(test.Id);
+                Database.Questions.Create(question);
+            }
             Database.Save();
         }
 

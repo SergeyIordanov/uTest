@@ -11,9 +11,9 @@
                 <div id="right-sidebar" class="card centralized z-depth-0">
                     <p class="card-title flow-text white-text menu-par">Menu</p>
                     <div class="collection with-header no-margin-top">
-                        @Html.RouteLink("Home", new { area = "Admin", controller = "Admin", action = "Index" }, new { @class = "collection-item main-color-text" })
-                        @Html.RouteLink("Manage tests", new { area = "Admin", controller = "AdminTest", action = "Index" }, new { @class = "collection-item main-color-text" })
-                        @Html.RouteLink("Manage users", new { area = "Admin", controller = "AdminUser", action = "Index" }, new { @class = "collection-item main-color-text" })
+                        @Html.RouteLink("Home", new {area = "Admin", controller = "Admin", action = "Index"}, new {@class = "collection-item main-color-text"})
+                        @Html.RouteLink("Manage tests", new {area = "Admin", controller = "AdminTest", action = "Index"}, new {@class = "collection-item main-color-text"})
+                        @Html.RouteLink("Manage users", new {area = "Admin", controller = "AdminUser", action = "Index"}, new {@class = "collection-item main-color-text"})
                     </div>
                 </div>
             </div>
@@ -24,14 +24,18 @@
             <div class="col l11 m12 s12">
                 <div class="row">
                     <p class="flow-text welcome-text centralized">Edit test</p>
-                    <hr class="colored-hr-thin" />
+                    <hr class="colored-hr-thin"/>
                 </div>
                 <div class="row">
-                    <p class="flow-text sub-welcome-text centralized">This page is developing now</p>
+                    @Html.Partial("Partials/_TestFormEdit", Model)
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<section id="scripts">
+    @Scripts.Render("~/bundles/testCreator")
+</section>
 
 
