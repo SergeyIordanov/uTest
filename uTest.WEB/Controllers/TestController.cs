@@ -116,7 +116,12 @@ namespace uTest.WEB.Controllers
                     {
                         if (!allAnswers.Contains(answer.Id.ToString()))
                             ok = false;
-                    }                   
+                    }
+                    else
+                    {
+                        if (allAnswers.Contains(answer.Id.ToString()))
+                            ok = false;
+                    }
                 }
                 if (ok)
                     rightQuestions++;
