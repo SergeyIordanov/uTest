@@ -100,7 +100,7 @@ namespace uTest.WEB.Controllers
                 Password = "admin123",
                 Name = "Admin Adminovich",
                 Role = "admin",
-            }, new List<string> { "user", "admin", "manager", "blocked" });
+            }, new List<string> { "user", "admin" });
         }
     }
 }
