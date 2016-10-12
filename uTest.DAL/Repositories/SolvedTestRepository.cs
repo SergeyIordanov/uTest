@@ -44,7 +44,7 @@ namespace uTest.DAL.Repositories
 
         public IEnumerable<SolvedTest> Find(Func<SolvedTest, bool> predicate)
         {
-            return _db.SolvedTests.Where(predicate).ToList();
+            return _db.SolvedTests.ToList().Where(predicate).ToList();
         }
 
         public void Delete(long id)

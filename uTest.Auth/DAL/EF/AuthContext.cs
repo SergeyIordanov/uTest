@@ -14,7 +14,7 @@ namespace uTest.Auth.DAL.EF
         /// </summary>
         static AuthContext()
         {
-            Database.SetInitializer(new AuthDbInitializer());
+            //Database.SetInitializer(new AuthDbInitializer());
         }
 
         public AuthContext(string conectionString) : base(conectionString)

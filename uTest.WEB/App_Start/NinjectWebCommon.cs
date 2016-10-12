@@ -41,7 +41,7 @@ namespace uTest.WEB
         private static IKernel CreateKernel()
         {
             // Set module from Util with ServiceModule from BLL with connection string 
-            var modules = new INinjectModule[] { new ServiceModule("TestContext") };
+            var modules = new INinjectModule[] { new ServiceModule("uTestContext") };
             var kernel = new StandardKernel(modules);
             try
             {

@@ -20,7 +20,7 @@ namespace uTest.DAL.EF
         /// </summary>
         static TestContext()
         {
-            Database.SetInitializer(new TestDbInitializer());
+            //Database.SetInitializer(new TestDbInitializer());
         }
 
         public TestContext() { }
