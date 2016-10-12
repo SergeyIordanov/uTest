@@ -41,7 +41,9 @@
                                      <p class="flow-text welcome-text centralized">Question #@ViewBag.QuestionNum</p>
                                  </div>
                                  <div class="row">
-                                     <p class="flow-text sub-welcome-text">@question.Text</p>
+                                     <p class="flow-text sub-welcome-text">
+                                         @Html.WriteHtml(question.Text.Replace("\r\n", "<br>").Replace("\n\r", "<br>").Replace("\n", "<br>"))
+                                     </p>
                                  </div>
                                  <div class="row">
                                      @{

@@ -18,6 +18,8 @@ namespace uTest.BLL.Interfaces
 
         void CreateTestFromDoc(string path);
 
+        void CreateTestFromDocWithoutOffice(string path);
+
         void CreateQuestion(QuestionDTO question, long testId);
 
         void CreateAnswer(AnswerDTO answer, long questionId);

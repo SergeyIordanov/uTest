@@ -1,4 +1,5 @@
-﻿@model IEnumerable<uTest.WEB.ViewModels.TestViewModel>
+﻿@using uTest.WEB.Helpers
+@model IEnumerable<uTest.WEB.ViewModels.TestViewModel>
 
 <div class="col l10 m10 s12 push-l1 push-m1">
     @if (Model == null || !Model.Any())
@@ -16,7 +17,9 @@
                 <div class="card-content no-margin-top">
                     @if (test.Description != null)
                     {
-                        <p class="flow-text sub-welcome-text">@test.Description</p>
+                        <p class="flow-text sub-welcome-text">
+                            @Html.WriteHtml(test.Description.Replace("\r\n", "<br>").Replace("\n\r", "<br>").Replace("\n", "<br>"))
+                        </p>
                     }
                     else
                     {

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using uTest.WEB.Helpers
 @model uTest.WEB.ViewModels.TestViewModel
 
 @{
@@ -31,7 +32,9 @@
                 <div class="row">
                     @if (Model.Description != null)
                     {
-                        <p class="flow-text sub-welcome-text">Description: @Model.Description</p>
+                        <p class="flow-text sub-welcome-text">
+                            Description: @Html.WriteHtml(Model.Description.Replace("\r\n", "<br>").Replace("\n\r", "<br>").Replace("\n", "<br>"))
+                        </p>
                     }
                     else
                     {

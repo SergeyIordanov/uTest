@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Novacode;
 using uTest.BLL.DTO;
 using uTest.BLL.Infrastructure;
 using uTest.BLL.Interfaces;
@@ -174,6 +175,123 @@ namespace uTest.BLL.Services
             {
                 doc?.Close(ref nullobj, ref nullobj, ref nullobj);
                 app?.Quit(ref nullobj, ref nullobj, ref nullobj);
+            }
+        }
+
+        public void CreateTestFromDocWithoutOffice(string path)
+        {
+            DocX doc = null;
+            var testDTO = new TestDTO { Questions = new List<QuestionDTO>() };
+            try
+            {
+                doc = DocX.Load(path);
+                if (doc.Tables.Count < 1)
+                    throw new ValidationException("Cannot find a table in the document", "");
+                Table table = doc.Tables[0];
+
+                if (table.Rows[0].Cells.Count == 1)
+                {
+                    testDTO.Name = "";
+                    foreach (Paragraph par in table.Rows[0].Cells[0].Paragraphs)
+                    {
+                        testDTO.Name += par.Text + "\n";
+                    }
+                    testDTO.Name = testDTO.Name.Substring(0, testDTO.Name.Length - 1);
+                }
+                else
+                    throw new ValidationException("The first row (test title) has to contain only one cell", "");
+                if (table.Rows[1].Cells.Count == 1)
+                {
+                    testDTO.Description = "";
+                    foreach (Paragraph par in table.Rows[1].Cells[0].Paragraphs)
+                    {
+                        testDTO.Description += par.Text + "\n";
+                    }
+                    testDTO.Description = testDTO.Description.Substring(0, testDTO.Description.Length - 1);
+                }
+                else
+                    throw new ValidationException("The second row (description) has to contain only one cell", "");
+                if (table.Rows[2].Cells.Count == 1 && table.Rows[2].Cells[0].Paragraphs.Count == 1)
+                {
+                    string val = table.Rows[2].Cells[0].Paragraphs[0].Text;
+                    if (string.IsNullOrEmpty(val) || val.Trim().ToLower().Equals("max"))
+                        testDTO.QuestionsToSolve = -1;
+                    else
+                    {
+                        int toSolve;
+                        try
+                        {
+                            toSolve = Convert.ToInt32(val);
+                        }
+                        catch (Exception)
+                        {
+                            throw new ValidationException("Amount of questions to solve must be a number", "");
+                        }
+                        testDTO.QuestionsToSolve = toSolve;
+                    }
+                }
+                else
+                    throw new ValidationException("Wrong doc structure", "");
+                var questionsPos = new Dictionary<int, string>();
+                for (int i = 3; i < table.Rows.Count; i++)
+                {
+                    if (table.Rows[i].Cells.Count == 1 && table.Rows[i + 1].Cells.Count == 1)
+                    {
+                        string text = "";
+                        foreach (Paragraph par in table.Rows[i + 1].Cells[0].Paragraphs)
+                        {
+                            text += par.Text + "\n";
+                        }
+                        questionsPos.Add(i + 1, text.Substring(0, text.Length - 1));
+                    }
+                }
+                foreach (KeyValuePair<int, string> pair in questionsPos)
+                {
+                    int correctsCount = 0;
+                    var question = new QuestionDTO {Text = pair.Value, Answers = new List<AnswerDTO>()};
+                    for (int i = pair.Key+1; i <= table.Rows.Count; i++)
+                    {
+                        if (i >= table.Rows.Count || table.Rows[i].Cells.Count == 1)
+                            break;
+                        string text = table.Rows[i].Cells[1].Paragraphs[0].Text;
+                        string correct = "";
+                        if (table.Rows[i].Cells[0].Paragraphs.Count > 0)
+                            correct = table.Rows[i].Cells[0].Paragraphs[0].Text;
+                        var answer = new AnswerDTO
+                        {
+                            Text = text,
+                            IsCorrect = correct.Trim().Equals("+")
+                        };
+                        if (answer.IsCorrect)
+                            correctsCount++;
+                        question.Answers.Add(answer);
+                    }
+                    if (correctsCount > 1)
+                        question.IsMultipleAnswers = true;                    
+                    testDTO.Questions.Add(question);
+                }
+                if (testDTO.QuestionsToSolve == -1)
+                    testDTO.QuestionsToSolve = testDTO.Questions.Count;
+                // Using ValidationException for transfer validation data to presentation layer
+                Validator.ValidateTestModel(testDTO);
+                // Mapping DTO object into DB entity
+                var mapper = MapperConfig.GetConfigFromDTO().CreateMapper();
+                var test = mapper.Map<Test>(testDTO);
+                // Creating and saving
+                Database.Tests.Create(test);
+                Database.Save();
+            }
+            catch (ValidationException ex)
+            {
+                throw new ValidationException("Document parsing failed. Details: " + ex.Message + ". " + ex.Property, "");
+            }
+            catch (Exception)
+            {
+                throw new ValidationException("Document parsing failed. Invalid structure", "");
+            }
+            finally
+            {
+                doc?.Dispose();
             }
         }
 

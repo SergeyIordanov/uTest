@@ -120,7 +120,7 @@ namespace uTest.WEB.Areas.Admin.Controllers
                     else
                         throw new ValidationException("Wrong file format", "");
                     uploadFile.SaveAs(path);
-                    _testService.CreateTestFromDoc(path);
+                    _testService.CreateTestFromDocWithoutOffice(path);
                 }
                 else
                 {
